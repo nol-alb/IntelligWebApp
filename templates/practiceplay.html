@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if trialno == 0 %}
+        <script>
+            alert("Please do not refresh the page, follow the instructions")
+        </script>
+        {% endif %}
+        <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" />
+        <link rel ="stylesheet" href="static/css/playstyle.css" />
+    </head>
+    <body>
+
+<div class="center-screen">
+<div class="card">
+  <div class="container">
+    <h4><b>Press Space Bar</b></h4> 
+    <p>To play the Pattern</p> 
+
+<div>
+ <audio id="audio">
+        <source src ="{{ songout }}" type = "audio/wav">
+    </audio>
+    <script src="../static/js/audioplayer.js"></script>
+</div>
+{% if imageCheck == 1 %}
+    <img src="{{ plotout }}" align="middle"  width="600" height="256.5" />
+{% endif %}
+{% if imageCheck == 0 %}
+<p> Listen to the pattern carefully</p>
+{% endif %}
+<div class="col-md-12" style="text-align:center;">
+    <a class="btn btn-primary">
+    <form method="post">
+       <input type="submit" value="Continue" >
+    </form>
+    </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    </body>

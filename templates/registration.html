@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" />
+        <link rel ="stylesheet" href="static/css/style.css" />
+    </head>
+{% block body %}
+<h1>Questionare</h1>
+<p>
+  <ul>
+    <li>Please fill the details in this questionare</li>
+    <li>Ensure that you fill all the fields, if a particular field does not apply to you kindly fill it as 'NA'</li>
+    <li>Being a musician does not only pertain to playing an instrument, a singer can 
+      fill the field of Instruments Played as ‘Vocals’.</li>
+</p>
+<br>
+<hr>
+{% from "includes/_formhelpers.html" import render_field %}
+<form method="POST" action="/registration">
+  <div class="form-group">
+    {{render_field(form.gender, class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.musician, class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.instrument, class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.years_of_exp, class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.inst_of_record, class_="form-control")}}
+  </div>
+  <p><input type="submit" class="btn btn-primary" value="Submit"></p>
+</form>
+{% endblock %}

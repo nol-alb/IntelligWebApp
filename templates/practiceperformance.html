@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            alert("Please do not refresh the page, follow the instructions")
+        </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" />
+        <link rel ="stylesheet" href="static/css/style.css" />
+    </head>
+    <body>
+        <!-- <script src="../static/js/rhytvisuals.js"></script> -->
+        <div class="center-screen">
+            <div class="card">
+              <div class="container">
+                <h4><b>How You Did</b></h4> 
+                {% if n==1 %}
+                    <p>WELL DONE!!</p>
+                {% endif %}
+                {% if n==0 %}
+                    <p>Sorry you need to redo</p>
+                {% endif %}
+                {% if imageCheck == 1 %}
+                    <img src="{{ imageOut }}" align="middle" width="600" height="256.5"/>
+                {% endif %}
+                
+        <form method="post">
+            <br>
+            <input type="submit" value="Continue" >
+         </form>
+    </body>
+</html>
