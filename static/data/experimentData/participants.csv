@@ -2,3 +2,8 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 234,G6,G2,G4,G1,G3,G5,No,Drums,1,Clap,No
 
 94,G5,G3,G2,G1,G6,G4,Yes,Drums,23,Clap,M,No
+351,G4,G6,G1,G3,G2,G5,Yes,Drums,23,Clap,M,No
+35,G5,G3,G6,G1,G4,G2,Yes,Drums,12,Clap,M,No
+139,G2,G5,G3,G6,G4,G1,Yes,Drums,12,cLAP,M,No
+180,G5,G2,G1,G3,G4,G6,Yes,Drums,12,Clap,M,No
+286,G4,G5,G2,G6,G3,G1,Ys,res,2,Clap,M,No

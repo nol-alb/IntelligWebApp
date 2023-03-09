@@ -194,7 +194,9 @@ def practicePerformanceView():
         return render_template('practiceperformance.html', imageOut = fileName, n = cnrt, imageCheck= imageCheck)
 @app.route('/blockcomplete', methods=['GET','POST'])
 def blockWaitRoutine():
+    where = session['where']
     cntOrder = session['OrderCount']
+    block_name = where[int(cntOrder)]
     #just have to change current folder in post
     if request.method=='POST':
         cntOrder = int(cntOrder)+1
@@ -209,7 +211,7 @@ def blockWaitRoutine():
         session["TrialFileCount"] =  str(0)
         return redirect(url_for('practicePlayRoutine'))
     else:
-        return render_template('blockcomplete.html')
+        return render_template('blockcomplete.html', blockName = block_name)
 
 
 
@@ -249,6 +251,7 @@ def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         intTrialFileCount = 0
+        session['where'] = ['Practice Block', '1/6','2/6','3/6','4/6','5/6','6/6']
         session['bImage'] = 'True'
         session['StimuliRepeat'] = str(1)
         session['StimuliSize'] = str(0)
@@ -333,3 +336,6 @@ def register():
 
 
     return render_template('registration.html', form=form)
+
+if __name__ == "__main__":
+    app.run()
