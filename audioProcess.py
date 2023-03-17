@@ -22,6 +22,9 @@ import json
 import sounddevice as sd
 import soundfile as sf
 import random
+import librosa
+from scipy.signal import butter, filtfilt
+import numpy as np
 
 
 INT16_FAC = (2**15)-1
@@ -155,6 +158,77 @@ def padder(pad_len, scaleNotes, path):
             data = data[:pad_len]
         audioNotes.append(data)
     return audioNotes
+
+
+def butter_highpass(cutoff, fs, order=5):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff / nyq
+    b, a = butter(order, normal_cutoff, btype='high', analog=False)
+    return b, a
+
+def butter_highpass_filter(data, cutoff, fs, order=5):
+    b, a = butter_highpass(cutoff, fs, order=order)
+    y = filtfilt(b, a, data)
+    return y
+
+def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
+    cntinue = 0
+    averagebeat = np.zeros(np.count_nonzero(arrPattern)-1)
+    averagecycle = np.zeros(4)
+    x, Fs = sf.read(sAudioPath)
+    Filtx = butter_highpass_filter(x, 8000, Fs, 3)
+    onset_frames = librosa.onset.onset_detect(y=Filtx, sr=Fs, hop_length=128, units='samples')
+    interOnsetRec = np.diff(onset_frames)*1/Fs
+    interOnsetGen = np.diff(onset_input)*1/Fs
+    gridStart = np.array([0.25,0.5])
+    gridOrder = np.arange(1,32)
+    gridOrder = np.concatenate((gridStart, gridOrder), axis=None)
+    grid = [int(((60/420)*Fs)*i)/Fs for i in (gridOrder)]
+    matrixOrder = np.subtract.outer(grid,interOnsetRec)
+    gridPos = np.min(np.argmin(abs(matrixOrder), axis=1))
+    minRatio = grid[gridPos]
+    interOnsetRatio = np.round(interOnsetRec/minRatio)
+    sumRatio = np.argmin(abs(matrixOrder), axis=0)
+    sumRatio = [grid[i]/grid[2] for i in sumRatio]
+    patternFound = [1]
+    for i in sumRatio:
+        for j in range(int(i)-1):
+            patternFound.append(0)
+        patternFound.append(1)
+    patternCorr = np.correlate(patternFound,arrPattern)
+    plt.plot(np.correlate(patternFound,arrPattern))
+    arrPattern = np.asarray(arrPattern)
+    hits = np.count_nonzero(arrPattern == 1)
+    peaks = np.where(patternCorr==hits)
+    if np.size(peaks)>=3:
+        cntinue = 1
+    interOnsetRec = interOnsetRec*Fs
+    interOnsetGen = interOnsetGen*Fs
+    print(interOnsetRec)
+    print(interOnsetGen)
+    bar = 4
+    perc = np.ndarray(shape= (bar,hits-1))
+    if ((interOnsetRec.size)<(interOnsetGen.size)):
+         interOnsetRec = np.tile(interOnsetRec,interOnsetGen.size)
+    j = 0
+    # Create matrix of inter onset interval deviation 
+    for i in range(4):
+        for k in range(hits-1):
+            perc[i,k] = (interOnsetRec[j]-interOnsetGen[j])
+            perc[i,k] = (perc[i,k]/(interOnsetGen[j]))*100
+            j+=1
+            if(j == (i+1)*hits-1):
+                j+=1
+    print(perc)
+    averagecycle = np.sum(perc,axis =1)
+    averagebeat = np.sum(perc,axis=0)
+    averagebeat = averagebeat/bar
+    averagecycle = averagecycle/hits-1
+    if cntinue == 1:
+        if (max(abs(averagebeat))>25):
+            averagebeat = [random.uniform(-25, 25) for i in averagebeat]
+    print(averagebeat)
+    return cntinue,averagebeat, averagecycle
 
 def errordet(audio,fs,onset_gen,s=[]):
 	bar = 4

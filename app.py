@@ -127,11 +127,12 @@ def practiceRecordRoutine():
             pattern = session['currentPattern']
             audioPath = session['RecordFilePath']
             onsetData = session['OnsetData']
-            try:
-                averagebeat, averagecycle,cnrt = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
-            except:
-                averagebeat = 0
-                cnrt = 0
+            #try:
+            #cnrt,averagebeat, averagecycle = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
+            #except:
+            #     averagebeat = 0
+            #    cnrt = 0
+            averagebeat, averagecycle,cnrt2 = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
             print('PatternHere:',pattern, averagebeat)
             patternPlay = viz.errorVisualization(pattern, averagebeat)
             print('PlayPatternHere:',patternPlay)
@@ -157,7 +158,11 @@ def practicePerformanceView():
         imageCheck = 1
     if (bimageCheck == 'False'):
         imageCheck = 0
-    averagebeat, averagecycle,cnrt = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
+    try:
+        averagebeat, averagecycle,cnrt2 = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
+        #cnrt,averagebeat, averagecycle = aud.performance_assessment(420,pattern,audio=audioPath,onset_gen=np.array(onsetData))
+    except:
+        cnrt = 0
     #Check if trial file count is equal to length of stimuli folder, if yes, show the block pause html else move on
     '''
     if it is the final slot then make the dashboard and thank them!
