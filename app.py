@@ -141,7 +141,7 @@ def practiceRecordRoutine():
             fileName = filePath + '/images/' + currentPattern + '_' + session['StimuliRepeat'] + '.png'
             viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
             session['ImageFilePath'] = fileName
-            return redirect(url_for('practicePerformanceView'))
+        return redirect(url_for('practicePerformanceView'))
     else:
         return render_template('practicerecord.html')
 
@@ -157,11 +157,12 @@ def practicePerformanceView():
         imageCheck = 1
     if (bimageCheck == 'False'):
         imageCheck = 0
-    averagebeat, averagecycle,cnrt = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
+    # averagebeat, averagecycle,cnrt = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
     #Check if trial file count is equal to length of stimuli folder, if yes, show the block pause html else move on
     '''
     if it is the final slot then make the dashboard and thank them!
     '''
+    cnrt=0
     trialFileCount = session["TrialFileCount"]
     if request.method=='POST':
         if (cnrt == 0):

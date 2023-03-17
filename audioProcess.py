@@ -1,21 +1,15 @@
-#import librosa
+import librosa
 import numpy as np
 import matplotlib
 matplotlib.use('agg')
-import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 from scipy.io import wavfile
 import scipy.signal as signal
 import librosa
 from scipy.fftpack import fft, ifft
 import soundfile as sf
-import os
-import glob
-import time
 import pandas as pd
 import numpy as np
-import math
-import itertools
 import numpy as np
 import tabulate as tb
 import json
@@ -158,7 +152,7 @@ def padder(pad_len, scaleNotes, path):
 
 def errordet(audio,fs,onset_gen,s=[]):
 	bar = 4
-	y, sr = sf.read(audio)
+	y, sr = librosa.load(audio, sr=fs)
 	y = np.where(y<0.250*np.max(y),0,y)
 	onset_frames = librosa.onset.onset_detect(y=y, sr=sr, hop_length=128, units='samples')
 	inter_onset1 = np.zeros(onset_gen.size-1)
