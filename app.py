@@ -127,12 +127,12 @@ def practiceRecordRoutine():
             pattern = session['currentPattern']
             audioPath = session['RecordFilePath']
             onsetData = session['OnsetData']
-            #try:
-            #cnrt,averagebeat, averagecycle = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
-            #except:
-            #     averagebeat = 0
-            #    cnrt = 0
-            averagebeat, averagecycle,cnrt2 = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
+            try:
+                cnrt,averagebeat, averagecycle,patterFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
+            except:
+                averagebeat = 0
+                cnrt = 0
+            session['Proceed'] = str(cnrt)    
             print('PatternHere:',pattern, averagebeat)
             patternPlay = viz.errorVisualization(pattern, averagebeat)
             print('PlayPatternHere:',patternPlay)
@@ -154,15 +154,11 @@ def practicePerformanceView():
     audioPath = session['RecordFilePath']
     onsetData = session['OnsetData']
     bimageCheck = session['bImage']
+    cnrt = int(session['Proceed'])
     if (bimageCheck == 'True'):
         imageCheck = 1
     if (bimageCheck == 'False'):
         imageCheck = 0
-    try:
-        averagebeat, averagecycle,cnrt2 = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
-        #cnrt,averagebeat, averagecycle = aud.performance_assessment(420,pattern,audio=audioPath,onset_gen=np.array(onsetData))
-    except:
-        cnrt = 0
     #Check if trial file count is equal to length of stimuli folder, if yes, show the block pause html else move on
     '''
     if it is the final slot then make the dashboard and thank them!
@@ -258,6 +254,7 @@ def register():
         intTrialFileCount = 0
         session['where'] = ['Practice Block', '1/6','2/6','3/6','4/6','5/6','6/6']
         session['bImage'] = 'True'
+        session['Proceed'] = str(0)
         session['StimuliRepeat'] = str(1)
         session['StimuliSize'] = str(0)
         session['ImageCheck'] = []

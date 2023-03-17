@@ -9,13 +9,7 @@ import scipy.signal as signal
 import librosa
 from scipy.fftpack import fft, ifft
 import soundfile as sf
-import os
-import glob
-import time
 import pandas as pd
-import numpy as np
-import math
-import itertools
 import numpy as np
 import tabulate as tb
 import json
@@ -25,7 +19,9 @@ import random
 import librosa
 from scipy.signal import butter, filtfilt
 import numpy as np
-
+from scipy.signal import find_peaks
+from difflib import get_close_matches
+import editdistance
 
 INT16_FAC = (2**15)-1
 INT32_FAC = (2**31)-1
@@ -173,17 +169,15 @@ def butter_highpass_filter(data, cutoff, fs, order=5):
 
 def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     cntinue = 0
-    averagebeat = np.zeros(np.count_nonzero(arrPattern)-1)
-    averagecycle = np.zeros(4)
-    x, Fs = sf.read(sAudioPath)
+    x, Fs = librosa.load(sAudioPath,sr=44100)
     Filtx = butter_highpass_filter(x, 8000, Fs, 3)
     onset_frames = librosa.onset.onset_detect(y=Filtx, sr=Fs, hop_length=128, units='samples')
-    interOnsetRec = np.diff(onset_frames)*1/Fs
-    interOnsetGen = np.diff(onset_input)*1/Fs
+    interOnsetRec = np.diff(onset_frames)*1/44100
+    interOnsetGen = np.diff(onset_input)*1/44100
     gridStart = np.array([0.25,0.5])
     gridOrder = np.arange(1,32)
     gridOrder = np.concatenate((gridStart, gridOrder), axis=None)
-    grid = [int(((60/420)*Fs)*i)/Fs for i in (gridOrder)]
+    grid = [int(((60/420)*44100)*i)/44100 for i in (gridOrder)]
     matrixOrder = np.subtract.outer(grid,interOnsetRec)
     gridPos = np.min(np.argmin(abs(matrixOrder), axis=1))
     minRatio = grid[gridPos]
@@ -199,17 +193,30 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     plt.plot(np.correlate(patternFound,arrPattern))
     arrPattern = np.asarray(arrPattern)
     hits = np.count_nonzero(arrPattern == 1)
-    peaks = np.where(patternCorr==hits)
-    if np.size(peaks)>=3:
-        cntinue = 1
-    interOnsetRec = interOnsetRec*Fs
-    interOnsetGen = interOnsetGen*Fs
+
+    editarray =[]
+    pattslicelist =[]
+    for i in range((len(patternFound)-len(pat))+1):
+        patslice = patternFound[i:i+len(pat)]
+        patslice1 = ''.join(str(e) for e in patslice)
+        pattslicelist.append(patslice1)
+        pattern = ''.join(str(e) for e in pat)
+        editarray.append(editdistance.eval(patslice1,pattern))
+
+    matches = get_close_matches(pattern, pattslicelist,3)
+    if len(set(matches)) == 1:
+        cntinue=1
+    else:
+        editarray = np.asarray(editarray)
+        posi = np.where((editarray==0) | (editarray==1))
+        if np.size(posi>=3):
+            cntinue=1
+    interOnsetRec = interOnsetRec*44100
+    interOnsetGen = interOnsetGen*44100
     print(interOnsetRec)
     print(interOnsetGen)
     bar = 4
     perc = np.ndarray(shape= (bar,hits-1))
-    if ((interOnsetRec.size)<(interOnsetGen.size)):
-         interOnsetRec = np.tile(interOnsetRec,interOnsetGen.size)
     j = 0
     # Create matrix of inter onset interval deviation 
     for i in range(4):
@@ -220,6 +227,7 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
             if(j == (i+1)*hits-1):
                 j+=1
     print(perc)
+    
     averagecycle = np.sum(perc,axis =1)
     averagebeat = np.sum(perc,axis=0)
     averagebeat = averagebeat/bar
@@ -227,12 +235,11 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     if cntinue == 1:
         if (max(abs(averagebeat))>25):
             averagebeat = [random.uniform(-25, 25) for i in averagebeat]
-    print(averagebeat)
-    return cntinue,averagebeat, averagecycle
+    return cntinue,averagebeat, averagecycle,patternFound
 
 def errordet(audio,fs,onset_gen,s=[]):
 	bar = 4
-	y, sr = sf.read(audio)
+	y, sr = librosa.load(audio,sr=None)
 	y = np.where(y<0.250*np.max(y),0,y)
 	onset_frames = librosa.onset.onset_detect(y=y, sr=sr, hop_length=128, units='samples')
 	inter_onset1 = np.zeros(onset_gen.size-1)
