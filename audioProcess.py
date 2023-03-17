@@ -196,31 +196,30 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
 
     editarray =[]
     pattslicelist =[]
-    for i in range((len(patternFound)-len(pat))+1):
-        patslice = patternFound[i:i+len(pat)]
+    pattern = ''.join(str(e) for e in arrPattern)
+    for i in range((len(patternFound)-len(arrPattern))+1):
+        patslice = patternFound[i:i+len(arrPattern)]
         patslice1 = ''.join(str(e) for e in patslice)
         pattslicelist.append(patslice1)
-        pattern = ''.join(str(e) for e in pat)
         editarray.append(editdistance.eval(patslice1,pattern))
 
     matches = get_close_matches(pattern, pattslicelist,3)
-    if len(set(matches)) == 1:
+    editarray = np.asarray(editarray)
+    posi = np.where((editarray==0) | (editarray==1))
+    if (np.size(posi)>=2):
         cntinue=1
-    else:
-        editarray = np.asarray(editarray)
-        posi = np.where((editarray==0) | (editarray==1))
-        if np.size(posi>=3):
-            cntinue=1
     interOnsetRec = interOnsetRec*44100
     interOnsetGen = interOnsetGen*44100
     print(interOnsetRec)
     print(interOnsetGen)
-    bar = 4
-    perc = np.ndarray(shape= (bar,hits-1))
+    if ((interOnsetRec.size)<(interOnsetGen.size)):
+        interOnsetRec = np.tile(interOnsetRec,interOnsetGen.size)
+    bar = 3
+    perc = np.ndarray(shape= (bar,hits))
     j = 0
     # Create matrix of inter onset interval deviation 
-    for i in range(4):
-        for k in range(hits-1):
+    for i in range(3):
+        for k in range(hits):
             perc[i,k] = (interOnsetRec[j]-interOnsetGen[j])
             perc[i,k] = (perc[i,k]/(interOnsetGen[j]))*100
             j+=1
@@ -231,7 +230,7 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     averagecycle = np.sum(perc,axis =1)
     averagebeat = np.sum(perc,axis=0)
     averagebeat = averagebeat/bar
-    averagecycle = averagecycle/hits-1
+    averagecycle = averagecycle/hits
     if cntinue == 1:
         if (max(abs(averagebeat))>25):
             averagebeat = [random.uniform(-25, 25) for i in averagebeat]

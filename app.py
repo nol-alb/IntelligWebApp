@@ -127,13 +127,13 @@ def practiceRecordRoutine():
             pattern = session['currentPattern']
             audioPath = session['RecordFilePath']
             onsetData = session['OnsetData']
-            try:
-                cnrt,averagebeat, averagecycle,patterFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
-            except:
-                averagebeat = 0
-                cnrt = 0
+            # try:
+            cnrt,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
+            # except:
+                # averagebeat = 0
+                # cnrt = 0
             session['Proceed'] = str(cnrt)    
-            print('PatternHere:',pattern, averagebeat)
+            print('PatternHere:',patternFound, averagebeat)
             patternPlay = viz.errorVisualization(pattern, averagebeat)
             print('PlayPatternHere:',patternPlay)
             fileDirectory = session['participantPath']
@@ -205,7 +205,8 @@ def blockWaitRoutine():
         stims = session['stimuliOrder']
         print('this is stimuli:',session['stimuliOrder'] )
         session['OrderCount'] = cntOrder
-        if(cntOrder>5):
+        if(cntOrder>6):
+            #append csv to complete YES
             return render_template('experimentcomplete.html')
         session['currentFolder'] = stims[cntOrder]
         session['bImage'] = imageCheck[cntOrder]
@@ -330,7 +331,7 @@ def register():
         gender = userdata["gender"]
         with open('static/data/experimentData/participants.csv', mode='a') as csv_file:
             data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,'No'])
+            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,'No',folderOrder[0],folderOrder[1],folderOrder[2],folderOrder[3],folderOrder[4],folderOrder[5]])
         csv_file.close()
         
         return redirect(url_for('instructions'))
