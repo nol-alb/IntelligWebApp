@@ -177,7 +177,7 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     gridStart = np.array([0.25,0.5])
     gridOrder = np.arange(1,32)
     gridOrder = np.concatenate((gridStart, gridOrder), axis=None)
-    grid = [int(((60/420)*44100)*i)/44100 for i in (gridOrder)]
+    grid = [int(((60/iBpm)*44100)*i)/44100 for i in (gridOrder)]
     matrixOrder = np.subtract.outer(grid,interOnsetRec)
     gridPos = np.min(np.argmin(abs(matrixOrder), axis=1))
     minRatio = grid[gridPos]
@@ -206,7 +206,7 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     matches = get_close_matches(pattern, pattslicelist,3)
     editarray = np.asarray(editarray)
     posi = np.where((editarray==0) | (editarray==1))
-    if (np.size(posi)>=2):
+    if (np.size(posi)>=3):
         cntinue=1
     interOnsetRec = interOnsetRec*44100
     interOnsetGen = interOnsetGen*44100
@@ -234,6 +234,9 @@ def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
     if cntinue == 1:
         if (max(abs(averagebeat))>25):
             averagebeat = [random.uniform(-25, 25) for i in averagebeat]
+    else:
+        if (max(abs(averagebeat))<35):
+            cntinue =1
     return cntinue,averagebeat, averagecycle,patternFound
 
 def errordet(audio,fs,onset_gen,s=[]):
