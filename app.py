@@ -283,7 +283,7 @@ def register():
         Order = session['stimuliOrder']
         session["IsUpload"] = "No"
         print(Order)
-        ifImage = ['False']
+        ifImage = []
         pathDictionary,session['trialFilesDic'],session['trialPatternDic'],randomDictionary,session['trialImageDic'],session['trialOnsetDic'],folderOrder = util.pathOrganizer()
         print(session['trialFilesDic'])
         for i in Order:
