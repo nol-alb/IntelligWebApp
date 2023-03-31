@@ -10,3 +10,7 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 37,G1,G6,G2,G5,G4,G3,Yes,Drums,6,Clap,M,No,A,B,E,F,D,C
 236,G1,G6,G4,G5,G3,G2,Yes,Drums,23,Clap,M,No,A,B,D,C,E,F
 108,G2,G1,G5,G4,G3,G6,Yes,Drums,4,Clap,Male,No,B,D,E,F,C,A
+368,G4,G2,G3,G6,G1,G5,Yes,Drums,23,Clap,M,No,D,A,E,C,B,F
+84,G5,G6,G4,G3,G2,G1,Yes,Drums,23,Clap,M,No,C,B,F,E,A,D
+280,G1,G3,G4,G6,G2,G5,XXX,XXX,1,XX,XXX,No,A,B,D,F,E,C
+8,G3,G6,G2,G1,G4,G5,Yes,drums,4,Clap,M,No,F,D,C,E,A,B
