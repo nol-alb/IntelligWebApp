@@ -14,3 +14,10 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 84,G5,G6,G4,G3,G2,G1,Yes,Drums,23,Clap,M,No,C,B,F,E,A,D
 280,G1,G3,G4,G6,G2,G5,XXX,XXX,1,XX,XXX,No,A,B,D,F,E,C
 8,G3,G6,G2,G1,G4,G5,Yes,drums,4,Clap,M,No,F,D,C,E,A,B
+220,G3,G2,G6,G5,G4,G1,yes,piano,16,clapping,woman,No,D,B,F,A,C,E
+53,G6,G4,G5,G3,G2,G1,yes,drums,23,drums,m,No,F,A,B,E,D,C
+165,G1,G2,G5,G6,G4,G3,YES,"Bass, Guitar, Saxophone",5,Clapping,Male,No,B,A,D,C,E,F
+256,G6,G5,G1,G4,G3,G2,yes,piano,10,drums,female,No,F,D,B,E,A,C
+324,G2,G3,G1,G5,G6,G4,yes,piano,10,drums,female,No,F,E,B,D,C,A
+159,G4,G2,G5,G6,G3,G1,yes,piano,1,drums,female,No,C,B,F,E,D,A
+110,G6,G4,G5,G1,G2,G3,YES,Voice,20,Clapping,Female,No,F,D,C,B,E,A
