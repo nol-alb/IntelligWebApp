@@ -20,7 +20,18 @@ app = Flask(__name__,static_folder='static',
 # Set the secret_key on the application to something unique and secret, to use session
 app.secret_key = os.urandom(24)
 app.debug = True
-Stimarr = np.array(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
+global Stimarr 
+app.config['Stimarr'] = ['../static/data/Stimuli/GenStimuli/wmelody/B/4.mp3', '../static/data/Stimuli/GenStimuli/D/5.mp3', '../static/data/Stimuli/GenStimuli/F/3.mp3']
+global patterns 
+app.config['patterns'] = [[1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],[1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],[1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0]]
+global plotfiles 
+app.config['plots'] = ['../static/data/Stimuli/GenStimuli/B/4.png','../static/data/Stimuli/GenStimuli/D/5.png','../static/data/Stimuli/GenStimuli/F/3.png']
+global trialFileCount
+app.config['trialFileCount'] = 0
+app.config['cntinue'] = 0
+global cntinue
+cntinue = 0
+#trialFileCount = 0
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html")
@@ -36,7 +47,7 @@ def not_found(e):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
-        return redirect(url_for('consent'))
+        return redirect(url_for('practicePlayRoutine'))
     return render_template('homepage.html')
 @app.route('/consent', methods=['GET','POST'])
 def consent():
@@ -46,13 +57,18 @@ def consent():
 
 @app.route('/practiceplay', methods=['GET', 'POST'])
 def practicePlayRoutine():
-    currFolder = session['currentFolder']
+    Stimarr = app.config['Stimarr']
+    patterns = app.config['patterns']
+    plotfiles = app.config['plots']
+    trialFileCount = app.config['trialFileCount']
+    cntinue = app.config['cntinue']
+    # currFolder = session['currentFolder']
     # stimFolder =  'static/data/Stimuli'
-    imageCheck = session['bImage']
-    if (imageCheck == 'True'):
-        imageCheck = 1
-    if (imageCheck == 'False'):
-        imageCheck = 0
+    # imageCheck = session['bImage']
+    # if (imageCheck == 'True'):
+    imageCheck = 1
+    # if (imageCheck == 'False'):
+    #     imageCheck = 0
     # trials = os.path.join(stimFolder,currFolder)
     # trialFiles = []
     # plotFiles = []
@@ -71,33 +87,35 @@ def practicePlayRoutine():
     Check for the skip at beginning
 
     '''
-    trialFolders = session['trialFilesDic']
-    imageFolders = session['trialImageDic']
-    onsetFolders = session['trialOnsetDic']
-    patternDataDic = session['trialPatternDic']
-    imageFolder = imageFolders[currFolder]
-    trialFolder = trialFolders[currFolder]
-    onsetFolder = onsetFolders[currFolder]
-    patternData = patternDataDic[currFolder]
-    session['StimuliSize'] = len(trialFolder)
-    print('these are a few directories', imageFolder)
-    print('this is the number of files', session['StimuliSize'])
-    trialFileCount = int(session["TrialFileCount"])
-    audioFilePath = trialFolder[trialFileCount]
-    plotFilePath = imageFolder[trialFileCount]
-    patternData =  patternData[trialFileCount]
-    onsetFilePath = onsetFolder[trialFileCount]
-    onsetData = np.load(onsetFilePath)
-    onsetData = onsetData.tolist()
-    session['OnsetData'] = onsetData[0]
-    session['currentPattern'] = patternData
-    print(audioFilePath)
-    print(plotFilePath)
+    # trialFolders = session['trialFilesDic']
+    # imageFolders = session['trialImageDic']
+    # onsetFolders = session['trialOnsetDic']
+    # patternDataDic = session['trialPatternDic']
+    # imageFolder = imageFolders[currFolder]
+    # trialFolder = trialFolders[currFolder]
+    # onsetFolder = onsetFolders[currFolder]
+    # patternData = patternDataDic[currFolder]
+    # session['StimuliSize'] = len(trialFolder)
+    # print('these are a few directories', imageFolder)
+    # print('this is the number of files', session['StimuliSize'])
+    # trialFileCount = int(session["TrialFileCount"])
+    # audioFilePath = trialFolder[trialFileCount]
+    # plotFilePath = imageFolder[trialFileCount]
+    # patternData =  patternData[trialFileCount]
+    # onsetFilePath = onsetFolder[trialFileCount]
+    # onsetData = np.load(onsetFilePath)
+    # onsetData = onsetData.tolist()
+    # session['OnsetData'] = onsetData[0]
+    # session['currentPattern'] = patternData
+    # print(audioFilePath)
+    # print(plotFilePath)
+    audioFilePath = Stimarr[trialFileCount]
+    plotFilePath = plotfiles[trialFileCount]
+
     #Create the audio files and send the required files for practice run the routines and then go to the required exp setup
     if request.method == "POST":
         trialFileCount = trialFileCount+1
-        session["IsUpload"] = "No"
-        session["TrialFileCount"] = trialFileCount
+        app.config['trialFileCount'] = trialFileCount
         return redirect(url_for('practiceRecordRoutine'))
     else:
         return render_template('practiceplay.html',trialno = trialFileCount, songout = audioFilePath, plotout =plotFilePath, imageCheck = imageCheck)
@@ -105,43 +123,53 @@ def practicePlayRoutine():
 def saveAudio(filename):
         f = request.files['audio_data']
         outname= filename
-        session["IsUpload"] = "Yes"
+        # session["IsUpload"] = "Yes"
         with open(outname, 'wb') as audio:
              f.save(audio)
         return 0
 
+
 @app.route('/practicerecord', methods=['GET','POST'])
 def practiceRecordRoutine():
+    Stimarr = app.config['Stimarr']
+    patterns = app.config['patterns']
+    plotfiles = app.config['plots']
+    trialFileCount = app.config['trialFileCount']
+    cntinue = app.config['cntinue']
+    UploadCheck = "No"
     if request.method == "POST":
-        UploadCheck = session["IsUpload"]
         if(UploadCheck=="No"):
-            fileDirectory = session['participantPath']
-            filePath = os.path.join(fileDirectory, session['currentFolder'])
-            currentPattern =  ''.join(str(pat) for pat in session['currentPattern'])
-            fileName = filePath + '/audio/' + currentPattern + '_' + session['StimuliRepeat'] + '.wav' 
-            session['RecordFilePath'] = fileName
+            pattern = patterns[trialFileCount]
+            currentPattern =  ''.join(str(pat) for pat in pattern)
+            fileName = currentPattern + '_' + str(trialFileCount) + '.wav' 
             saveAudio(fileName)
             isExist = os.path.exists(fileName)
+            UploadCheck ="Yes"
             return render_template('practicerecord.html')
         else:
-            pattern = session['currentPattern']
-            audioPath = session['RecordFilePath']
-            onsetData = session['OnsetData']
-            # try:
-            cnrt,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
-            # except:
-                # averagebeat = 0
-                # cnrt = 0
-            session['Proceed'] = str(cnrt)    
-            print('PatternHere:',patternFound, averagebeat)
-            patternPlay = viz.errorVisualization(pattern, averagebeat)
-            print('PlayPatternHere:',patternPlay)
-            fileDirectory = session['participantPath']
-            filePath = os.path.join(fileDirectory, session['currentFolder'])
-            currentPattern =  ''.join(str(pat) for pat in session['currentPattern'])
-            fileName = filePath + '/images/' + currentPattern + '_' + session['StimuliRepeat'] + '.png'
-            viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
-            session['ImageFilePath'] = fileName
+            pattern = patterns[trialFileCount]
+            audioFilePath = Stimarr[trialFileCount]
+            plotFilePath = plotfiles[trialFileCount]
+        try:
+            patternPerf, patternRef, Onset_frames_Ref, Onset_frames_Perf = aud.convert_to_binary(fileName,fileName,True)
+            cntinue,matches,editarray = aud.edit_distance_check(patternPerf, pattern)
+            app.config['cntinue'] = cntinue
+            patternFound = [int(num) for num in list(matches[0])]
+            currentPattern =  ''.join(str(pat) for pat in pattern)
+            fileName = currentPattern + '_' + str(trialFileCount) + '.png'
+            viz.PatternErrorVisualizer(pattern,patternFound,fileName)
+        except:
+            averagebeat = 0
+            cnrt = 0
+
+            #patternPlay = viz.errorVisualization(pattern, averagebeat)
+            #print('PlayPatternHere:',patternPlay)
+            #fileDirectory = session['participantPath']
+            #filePath = os.path.join(fileDirectory, session['currentFolder'])
+            patternFound=[]
+            currentPattern =  ''.join(str(pat) for pat in pattern)
+            fileName = currentPattern + '_' + str(trialFileCount) + '.png'
+            viz.PatternErrorVisualizer(pattern,patternFound,fileName)
             return redirect(url_for('practicePerformanceView'))
     else:
         return render_template('practicerecord.html')
@@ -149,71 +177,81 @@ def practiceRecordRoutine():
 
 @app.route('/practiceperformance', methods=['GET','POST'])
 def practicePerformanceView():
-    fileName = session['ImageFilePath']
-    pattern = session['currentPattern']
-    audioPath = session['RecordFilePath']
-    onsetData = session['OnsetData']
-    bimageCheck = session['bImage']
-    cnrt = int(session['Proceed'])
-    if (bimageCheck == 'True'):
-        imageCheck = 1
-    if (bimageCheck == 'False'):
-        imageCheck = 0
+    Stimarr = np.array(['../static/data/Stimuli/GenStimuli/wmelody/B/4.mp3', '../static/data/Stimuli/GenStimuli/D/5.mp3', '../static/data/Stimuli/GenStimuli/F/3.mp3'])
+    patterns = [[1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],[1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],[1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0]]
+    plotfiles = ['../static/data/Stimuli/GenStimuli/B/4.png','../static/data/Stimuli/GenStimuli/D/5.png','../static/data/Stimuli/GenStimuli/F/3.png']
+    trialFileCount =app.config['trialFileCount']
+    pattern = patterns[trialFileCount]
+    currentPattern =  ''.join(str(pat) for pat in pattern)
+    fileName = currentPattern + '_' + str(trialFileCount) + '.png'
+    # pattern = session['currentPattern']
+    # audioPath = session['RecordFilePath']
+    # onsetData = session['OnsetData']
+    imageCheck = 1
+    # cnrt = int(session['Proceed'])
+    # if (bimageCheck == 'True'):
+    #     imageCheck = 1
+    # if (bimageCheck == 'False'):
+    #     imageCheck = 0
     #Check if trial file count is equal to length of stimuli folder, if yes, show the block pause html else move on
     '''
     if it is the final slot then make the dashboard and thank them!
     '''
-    trialFileCount = session["TrialFileCount"]
+    # trialFileCount = session["TrialFileCount"]
+    #cnrt,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioFilePath,onset_input=np.array(onsetData))
+    cnrt = app.config['cntinue']
     if request.method=='POST':
         if (cnrt == 0):
             if (trialFileCount>0):
                 trialFileCount = trialFileCount - 1
+                app.config['trialFileCount']= trialFileCount
             else:
                 trialFileCount =0
-            numRep = session['StimuliRepeat']
-            numRep = int(numRep)+1
-            session['StimuliRepeat'] = str(numRep)
-            session["TrialFileCount"] =  trialFileCount
+                app.config['trialFileCount']= trialFileCount
+            # numRep = session['StimuliRepeat']
+            # numRep = int(numRep)+1
+            # session['StimuliRepeat'] = str(numRep)
+            # session["TrialFileCount"] =  trialFileCount
             return redirect(url_for('practicePlayRoutine'))
 
 
         else:
-            fileDirectory = session['participantPath']
-            filePath = os.path.join(fileDirectory, session['currentFolder'])
+            #fileDirectory = session['participantPath']
+            #filePath = os.path.join(fileDirectory, session['currentFolder'])
 
-            csv_file = os.path.join(filePath, 'patterns.csv')
-            with open(csv_file, 'a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([str(pattern),session['StimuliRepeat']])
-            if(trialFileCount == int(session['StimuliSize'])):
-                return redirect(url_for('blockWaitRoutine'))
-            else:
-                session['StimuliRepeat'] = str(1)
+            #csv_file = os.path.join(filePath, 'patterns.csv')
+            #with open(csv_file, 'a', newline='') as file:
+               # writer = csv.writer(file)
+                #writer.writerow([str(pattern),session['StimuliRepeat']])
+            #if(trialFileCount == int(session['StimuliSize'])):
+                #return redirect(url_for('blockWaitRoutine'))
+            #else:
+                #session['StimuliRepeat'] = str(1)
                 return redirect(url_for('practicePlayRoutine'))
     else:
         #saveragebeat, averagecycle,cnrt = aud.errordet(audioPath,44100,onsetData,pattern)
         return render_template('practiceperformance.html', imageOut = fileName, n = cnrt, imageCheck= imageCheck)
-@app.route('/blockcomplete', methods=['GET','POST'])
-def blockWaitRoutine():
-    where = session['where']
-    cntOrder = session['OrderCount']
-    block_name = where[int(cntOrder)]
-    #just have to change current folder in post
-    if request.method=='POST':
-        cntOrder = int(cntOrder)+1
-        imageCheck = session['ImageCheck']
-        stims = session['stimuliOrder']
-        print('this is stimuli:',session['stimuliOrder'] )
-        session['OrderCount'] = cntOrder
-        if(cntOrder>6):
-            #append csv to complete YES
-            return render_template('experimentcomplete.html')
-        session['currentFolder'] = stims[cntOrder]
-        session['bImage'] = imageCheck[cntOrder]
-        session["TrialFileCount"] =  str(0)
-        return redirect(url_for('practicePlayRoutine'))
-    else:
-        return render_template('blockcomplete.html', blockName = block_name)
+# @app.route('/blockcomplete', methods=['GET','POST'])
+# def blockWaitRoutine():
+#     where = session['where']
+#     cntOrder = session['OrderCount']
+#     block_name = where[int(cntOrder)]
+#     #just have to change current folder in post
+#     if request.method=='POST':
+#         cntOrder = int(cntOrder)+1
+#         imageCheck = session['ImageCheck']
+#         stims = session['stimuliOrder']
+#         print('this is stimuli:',session['stimuliOrder'] )
+#         session['OrderCount'] = cntOrder
+#         if(cntOrder>6):
+#             #append csv to complete YES
+#             return render_template('experimentcomplete.html')
+#         session['currentFolder'] = stims[cntOrder]
+#         session['bImage'] = imageCheck[cntOrder]
+#         session["TrialFileCount"] =  str(0)
+#         return redirect(url_for('practicePlayRoutine'))
+#     else:
+#         return render_template('blockcomplete.html', blockName = block_name)
 
 
 
@@ -226,119 +264,126 @@ Registration:
     > We get the form html page and will post to a trial experiment setup.
     
 """
-class RegisterForm(Form):
-    musician = StringField('Musician (YES/NO)', [validators.Length(min=2, max=4)])
-    gender = StringField('Gender')
-    instrument = StringField('If yes, Which Instrument?')
-    years_of_exp = IntegerField('Years of experience (Only Number)')
-    inst_of_record = StringField('Instrument you will use to tap the patterns? [Clapping, or any percussion instrument]')
+# class RegisterForm(Form):
+#     musician = StringField('Musician (YES/NO)', [validators.Length(min=2, max=4)])
+#     gender = StringField('Gender')
+#     instrument = StringField('If yes, Which Instrument?')
+#     years_of_exp = IntegerField('Years of experience (Only Number)')
+#     inst_of_record = StringField('Instrument you will use to tap the patterns? [Clapping, or any percussion instrument]')
 
-@app.route('/instructions', methods=['GET','POST'])
-def instructions():
-    if request.method=='POST':
-        return redirect(url_for('visualInstructions'))
-    else:
-        return render_template('instructions1.html')
+# @app.route('/instructions', methods=['GET','POST'])
+# def instructions():
+#     if request.method=='POST':
+#         return redirect(url_for('visualInstructions'))
+#     else:
+#         return render_template('instructions1.html')
 
-@app.route('/visualinstructions', methods=['GET','POST'])
-def visualInstructions():
-    if request.method=='POST':
-        return redirect(url_for('practicePlayRoutine'))
-    else:
-        return render_template('visualinstruction.html')
+# @app.route('/visualinstructions', methods=['GET','POST'])
+# def visualInstructions():
+#     if request.method=='POST':
+#         return redirect(url_for('practicePlayRoutine'))
+#     else:
+#         return render_template('visualinstruction.html')
 
 
-@app.route('/registration', methods=['GET', 'POST'])
-def register():
-    form = RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
-        intTrialFileCount = 0
-        session['where'] = ['Practice Block', '1/6','2/6','3/6','4/6','5/6','6/6']
-        session['bImage'] = 'True'
-        session['Proceed'] = str(0)
-        session['StimuliRepeat'] = str(1)
-        session['StimuliSize'] = str(0)
-        session['ImageCheck'] = []
-        session['OnsetData'] = []
-        session['OrderCount'] = str(0)
-        session['TrialFileCount'] = str(intTrialFileCount)
-        Stimarr = np.array(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
-        participantData = dict(request.form)
-        RandGen = np.load('static/data/listOfNumbers.npy')
-        participantInd, RandGen = RandGen[-1], RandGen[:-1]
-        np.save('static/data/listOfNumbers.npy',RandGen)
-        newPath = 'static/data/experimentData/' + str(participantInd)
-        session['participantIndex'] = str(participantInd)
-        os.mkdir(newPath)
-        # A session is used to store user specific information and required data
-        session['participantPath'] = newPath
-        np.random.shuffle(Stimarr)
-        Stims = Stimarr
-        Stims = np.insert(Stims, 0, 'Gt')
-        #add the trial folderName to the beginning of the stimarr
+# @app.route('/registration', methods=['GET', 'POST'])
+# def register():
+#     # form = RegisterForm(request.form)
+#     # if request.method == 'POST' and form.validate():
+#         # Create the required questionare and information needed to conduct the study
+#         # intTrialFileCount = 0
+#         # session['where'] = ['Practice Block', '1/6','2/6','3/6','4/6','5/6','6/6']
+#         # session['bImage'] = 'True'
+#         # session['Proceed'] = str(0)
+#         # session['StimuliRepeat'] = str(1)
+#         # session['StimuliSize'] = str(0)
+#         # session['ImageCheck'] = []
+#         # session['OnsetData'] = []
+#         # session['OrderCount'] = str(0)
+#         # session['TrialFileCount'] = str(intTrialFileCount)
 
-        session['stimuliOrder'] = list(Stims)
-        print(Stims)
-        Stimarr = np.array(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
-        Order = session['stimuliOrder']
-        session["IsUpload"] = "No"
-        print(Order)
-        ifImage = []
-        pathDictionary,session['trialFilesDic'],session['trialPatternDic'],randomDictionary,session['trialImageDic'],session['trialOnsetDic'],folderOrder = util.pathOrganizer()
-        print(session['trialFilesDic'])
-        for i in Order:
-            if (i == 'G6' or i == 'G3'):
-                ifImage.append('True')
-            else:
-                ifImage.append('False')
-            stimFolder = os.path.join(newPath, i)
-            os.mkdir(stimFolder)
-            audioFiles =os.path.join(stimFolder, 'audio')
-            os.mkdir(audioFiles)
-            performanceFiles = os.path.join(stimFolder,'images')
-            os.mkdir(performanceFiles)
-            csv_file = os.path.join(stimFolder, 'patterns.csv')
-            with open(csv_file, 'w', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow(["Pattern","No_Of_Tries"])
-        #Creating directories for trial images and audio
-        print(ifImage)
-        session['ImageCheck'] = ifImage
-        file = 'static/data/Stimuli/patternsDictionary.json'
-        with open(file, 'r') as f:
-            patternData = json.load(f)
-        session['StimuliData'] = patternData
-        session['currentPattern'] = patternData['Gt'][0]
-        session['currentFolder'] = 'Gt'
-        # trialFolder =os.path.join(newPath, 'Gt')
-        # os.mkdir(trialFolder)
-        # audioFiles =os.path.join(trialFolder, 'audio')
-        # os.mkdir(audioFiles)
-        # performanceFiles = os.path.join(trialFolder,'images')
-        # os.mkdir(performanceFiles)
-        # csv_file = os.path.join(trialFolder/>/, 'patterns.csv')
-        # with open(csv_file, 'w', newline='') as file:
-        #         writer = csv.writer(file)
-        # writer.writerow(["Pattern","No_Of_Tries"])
+#         # participantData = dict(request.form)
+#         # RandGen = np.load('static/data/listOfNumbers.npy')
+#         # participantInd, RandGen = RandGen[-1], RandGen[:-1]
+#         # np.save('static/data/listOfNumbers.npy',RandGen)
+#         # newPath = 'static/data/experimentData/' + str(participantInd)
+#         # session['participantIndex'] = str(participantInd)
+#         # os.mkdir(newPath)
+#         # # A session is used to store user specific information and required data
+#         # session['participantPath'] = newPath
+#         # np.random.shuffle(Stimarr)
+#         # Stims = Stimarr
+#         # Stims = np.insert(Stims, 0, 'Gt')
+#         #add the trial folderName to the beginning of the stimarr
 
-        userdata = dict(request.form)
-        session['RecordFilePath'] = ''
-        session['ImageFilePath'] = ''
-        musician = userdata["musician"]
-        instrument = userdata["instrument"]
-        years_of_exp = userdata["years_of_exp"]
-        inst_of_record  = userdata["inst_of_record"]
-        gender = userdata["gender"]
-        with open('static/data/experimentData/participants.csv', mode='a') as csv_file:
-            data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,'No',folderOrder[0],folderOrder[1],folderOrder[2],folderOrder[3],folderOrder[4],folderOrder[5]])
-        csv_file.close()
+#         # session['stimuliOrder'] = list(Stims)
+#         # print(Stims)
+#         # Stimarr = np.array(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
+#         # Order = session['stimuliOrder']
+#         # session["IsUpload"] = "No"
+#         # print(Order)
+#         # ifImage = []
+#         # pathDictionary,session['trialFilesDic'],session['trialPatternDic'],randomDictionary,session['trialImageDic'],session['trialOnsetDic'],folderOrder = util.pathOrganizer()
+#         # print(session['trialFilesDic'])
+#         # for i in Order:
+#         #     if (i == 'G6' or i == 'G3'):
+#         #         ifImage.append('True')
+#         #     else:
+#         #         ifImage.append('False')
+#         #     stimFolder = os.path.join(newPath, i)
+#             # os.mkdir(stimFolder)
+#             # audioFiles =os.path.join(stimFolder, 'audio')
+#             # os.mkdir(audioFiles)
+#             # performanceFiles = os.path.join(stimFolder,'images')
+#             # os.mkdir(performanceFiles)
+#             # csv_file = os.path.join(stimFolder, 'patterns.csv')
+#             # with open(csv_file, 'w', newline='') as file:
+#             #     writer = csv.writer(file)
+#             #     writer.writerow(["Pattern","No_Of_Tries"])
+#         #Creating directories for trial images and audio
+#         # print(ifImage)
+#         # session['ImageCheck'] = ifImage
+#         # file = 'static/data/Stimuli/patternsDictionary.json'
+#         # with open(file, 'r') as f:
+#         #      patternData = json.load(f)
+#         # session['StimuliData'] = patternData
+#         # session['currentPattern'] = patternData['Gt'][0]
         
-        return redirect(url_for('instructions'))
+#         # session['currentFolder'] = 'Gt'
+#         # trialFolder =os.path.join(newPath, 'Gt')
+#         # os.mkdir(trialFolder)
+#         # audioFiles =os.path.join(trialFolder, 'audio')
+#         # os.mkdir(audioFiles)
+#         # performanceFiles = os.path.join(trialFolder,'images')
+#         # os.mkdir(performanceFiles)
+#         # csv_file = os.path.join(trialFolder/>/, 'patterns.csv')
+#         # with open(csv_file, 'w', newline='') as file:
+#         #         writer = csv.writer(file)
+#         # writer.writerow(["Pattern","No_Of_Tries"])
+
+#         # userdata = dict(request.form)
+#         # session['RecordFilePath'] = ''
+#         # session['ImageFilePath'] = ''
+#         # musician = userdata["musician"]
+#         # instrument = userdata["instrument"]
+#         # years_of_exp = userdata["years_of_exp"]
+#         # inst_of_record  = userdata["inst_of_record"]
+#         # gender = userdata["gender"]
+#         # with open('static/data/experimentData/participants.csv', mode='a') as csv_file:
+#         #     data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#         #     data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,'No',folderOrder[0],folderOrder[1],folderOrder[2],folderOrder[3],folderOrder[4],folderOrder[5]])
+#         # csv_file.close()
+        
+#         return redirect(url_for('instructions'))
 
 
 
-    return render_template('registration.html', form=form)
+#     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    app.run(host='130.207.85.75', port = 5000)
+    Stimarr = np.array(['/Users/noelalben/github/IntelligWebApp/static/data/Stimuli/GenStimuli/wmelody/B/4.mp3', '/Users/noelalben/github/IntelligWebApp/static/data/Stimuli/GenStimuli/D/5.mp3', '/Users/noelalben/github/IntelligWebApp/static/data/Stimuli/GenStimuli/F/3.mp3'])
+    patterns = [[1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],[1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],[1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0]]
+    plotfiles = ['/Users/noelalben/github/IntelligWebApp/static/data/Stimuli/GenStimuli/B/4.png','/Users/noelalben/github/IntelligWebApp/static/data/Stimuli/GenStimuli/D/5.png','/Users/noelalben/github/IntelligWebApp/static/data/Stimuli/GenStimuli/F/3.png']
+    trialFileCount =0
+    cntinue = 0
+    app.run()
