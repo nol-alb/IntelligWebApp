@@ -21,3 +21,18 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 324,G2,G3,G1,G5,G6,G4,yes,piano,10,drums,female,No,F,E,B,D,C,A
 159,G4,G2,G5,G6,G3,G1,yes,piano,1,drums,female,No,C,B,F,E,D,A
 110,G6,G4,G5,G1,G2,G3,YES,Voice,20,Clapping,Female,No,F,D,C,B,E,A
+306,G2,G3,G6,G5,G4,G1,Yes,Dummy,1,Dummy,Dummy,No,A,F,C,E,D,B
+20,G3,G5,G6,G4,G1,G2,Yes,dummmy,12,dummy,M,No,B,C,A,D,F,E
+325,G5,G1,G3,G2,G6,G4,YES,"Bass, Guitar, Saxophone",7,Clapping,Male,No,A,C,D,E,B,F
+379,G1,G3,G2,G6,G4,G5,Yes,Electric Guitar,8,clapping,Male,No,A,C,E,F,D,B
+388,G4,G2,G5,G6,G3,G1,Yes,Euphonium/Brass,12,Table,Female,No,F,E,B,C,A,D
+79,G6,G3,G1,G5,G4,G2,YES,"Drums, Guitar, Synth",13,Clapping,Male,No,A,C,E,F,D,B
+115,G4,G1,G6,G3,G5,G2,YES,"Drums, Guitar, Synth",13,Drum stick click,Male,No,A,B,C,F,D,E
+298,G3,G4,G1,G2,G6,G5,Yes,clarinet,6,clapping,Male,No,A,C,E,B,F,D
+366,G3,G4,G6,G5,G1,G2,yes,clarinet,3,clapping,Male,No,B,D,C,A,F,E
+203,G5,G3,G6,G2,G4,G1,YES,"Piano, Guitar, Vocals",4,Clap,Male,No,F,A,E,C,B,D
+390,G2,G3,G6,G4,G5,G1,yes,Piano,7,hands,woman,No,E,C,D,A,F,B
+88,G5,G1,G4,G3,G6,G2,Yes,Guitar,3,,Male,No,D,A,F,E,C,B
+204,G6,G1,G2,G3,G4,G5,NO,,0,,,No,E,D,A,B,C,F
+58,G4,G2,G3,G5,G1,G6,YES,,2,,Male,No,A,C,E,F,D,B
+305,G4,G3,G1,G2,G5,G6,Yes,Producer and Piano,6,pencils,Male,No,B,F,C,D,E,A
