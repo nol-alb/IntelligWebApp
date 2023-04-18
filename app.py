@@ -194,6 +194,11 @@ def practicePerformanceView():
     if it is the final slot then make the dashboard and thank them!
     '''
     trialFileCount = session["TrialFileCount"]
+    numRep = session['StimuliRepeat']
+    print('The trial file Number:', numRep)
+    if(int(numRep)>=9):
+        cnrt = 1
+        session['Proceed'] = str(cnrt)
     if request.method=='POST':
         if (cnrt == 0):
             if (trialFileCount>0):
@@ -222,7 +227,7 @@ def practicePerformanceView():
                 return redirect(url_for('practicePlayRoutine'))
     else:
         #saveragebeat, averagecycle,cnrt = aud.errordet(audioPath,44100,onsetData,pattern)
-        return render_template('practiceperformance.html', imageOut = fileName, n = cnrt, imageCheck= imageCheck)
+        return render_template('practiceperformance.html', imageOut = fileName, n = cnrt, imageCheck= imageCheck, trialno = int(numRep))
 @app.route('/blockcomplete', methods=['GET','POST'])
 def blockWaitRoutine():
     where = session['where']
@@ -379,5 +384,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    #app.run(host='130.207.85.75', port = 5000)
-    app.run()
+    app.run(host='130.207.85.75', port = 5000)
+    #app.run()

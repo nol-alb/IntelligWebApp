@@ -49,3 +49,7 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 290,G6,G2,G3,G4,G1,G5,yes,dummy,7,dummy,m,No,A,F,D,E,B,C
 47,G3,G5,G4,G1,G2,G6,Yes,dummy,5,dummy,M,No,E,A,B,F,C,D
 277,G3,G6,G5,G4,G1,G2,yes,dummy,4,dummy,m,No,D,F,C,A,B,E
+132,G1,G2,G5,G6,G3,G4,Yes,Dummy,5,dummy,M,No,F,B,C,A,D,E
+312,G6,G4,G3,G1,G5,G2,yes,dummy,2,dummy,m,No,A,E,B,C,D,F
+118,G5,G3,G4,G2,G6,G1,NO,DUMMY,2,DUMMY,M,No,C,D,F,A,B,E
+95,G3,G2,G6,G4,G5,G1,Yes,drummy,4,dummy,M,No,B,D,E,C,F,A
