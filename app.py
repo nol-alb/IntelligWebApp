@@ -7,6 +7,7 @@ import json
 import audioProcess as aud
 import visualization as viz
 import utils as util
+import assessment as ass
 
 
 
@@ -127,21 +128,50 @@ def practiceRecordRoutine():
             pattern = session['currentPattern']
             audioPath = session['RecordFilePath']
             onsetData = session['OnsetData']
-            # try:
-            cnrt,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
-            # except:
-                # averagebeat = 0
-                # cnrt = 0
-            session['Proceed'] = str(cnrt)    
-            print('PatternHere:',patternFound, averagebeat)
-            patternPlay = viz.errorVisualization(pattern, averagebeat)
-            print('PlayPatternHere:',patternPlay)
             fileDirectory = session['participantPath']
             filePath = os.path.join(fileDirectory, session['currentFolder'])
             currentPattern =  ''.join(str(pat) for pat in session['currentPattern'])
             fileName = filePath + '/images/' + currentPattern + '_' + session['StimuliRepeat'] + '.png'
-            viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
+            try:
+                cnrt1,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
+                cnrt2 = ass.wrefAsessment(audioPath, pattern,fileName)
+            except:
+                averagebeat = 0
+                cnrt1 = 0
+                cnrt2 = 0
+            if(cnrt1==1 or cnrt2 ==1):
+                cnrt = 1
+                session['Proceed'] = str(cnrt)     
+            if(cnrt1==1):
+                patternPlay = viz.errorVisualization(pattern, averagebeat)
+                viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
+            elif(cnrt2==1):
+                cnrt = 1
+                session['Proceed'] = str(cnrt) 
+                isExist = os.path.exists(fileName)
+                if(isExist):
+                    session['ImageFilePath'] = fileName
+                else:
+                    ass.PatternErrorVisualizer(pattern,[],fileName)
+                    session['ImageFilePath'] = fileName
+            else:
+                cnrt = 0
+                session['Proceed'] = str(cnrt) 
+                isExist = os.path.exists(fileName)
+                if(isExist):
+                    session['ImageFilePath'] = fileName
+                else:
+                    ass.PatternErrorVisualizer(pattern,[],fileName)
+                    session['ImageFilePath'] = fileName
+
             session['ImageFilePath'] = fileName
+
+
+
+#            print('PatternHere:',patternFound, averagebeat)
+#            patternPlay = viz.errorVisualization(pattern, averagebeat)
+#            print('PlayPatternHere:',patternPlay)
+#            viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
             return redirect(url_for('practicePerformanceView'))
     else:
         return render_template('practicerecord.html')
@@ -205,8 +235,14 @@ def blockWaitRoutine():
         stims = session['stimuliOrder']
         print('this is stimuli:',session['stimuliOrder'] )
         session['OrderCount'] = cntOrder
+        #make6
         if(cntOrder>6):
             #append csv to complete YES
+            with open('static/data/experimentData/complete.csv', mode='a') as csv_file:
+                data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                participantInd = session['participantIndex']
+                data.writerow([str(participantInd), 'Yes'])
+            csv_file.close()
             return render_template('experimentcomplete.html')
         session['currentFolder'] = stims[cntOrder]
         session['bImage'] = imageCheck[cntOrder]
@@ -265,7 +301,9 @@ def register():
         Stimarr = np.array(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
         participantData = dict(request.form)
         RandGen = np.load('static/data/listOfNumbers.npy')
+        print(RandGen)
         participantInd, RandGen = RandGen[-1], RandGen[:-1]
+        print(RandGen)
         np.save('static/data/listOfNumbers.npy',RandGen)
         newPath = 'static/data/experimentData/' + str(participantInd)
         session['participantIndex'] = str(participantInd)
@@ -341,4 +379,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    app.run(host='130.207.85.75', port = 5000)
+    #app.run(host='130.207.85.75', port = 5000)
+    app.run()

@@ -36,3 +36,16 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 204,G6,G1,G2,G3,G4,G5,NO,,0,,,No,E,D,A,B,C,F
 58,G4,G2,G3,G5,G1,G6,YES,,2,,Male,No,A,C,E,F,D,B
 305,G4,G3,G1,G2,G5,G6,Yes,Producer and Piano,6,pencils,Male,No,B,F,C,D,E,A
+111,G2,G4,G6,G3,G5,G1,Yes,dummy,2,dummy,M,No,D,F,B,E,A,C
+37,G3,G5,G4,G1,G2,G6,Yes,dummy,2,dummy,M,No,D,A,C,F,B,E
+165,G4,G2,G3,G6,G5,G1,yes,dummy,23,dummy,m,No,D,A,C,B,E,F
+191,G1,G5,G6,G2,G3,G4,Yes,dummy,4,dummy,M,No,D,E,B,A,C,F
+246,G2,G1,G6,G5,G4,G3,Yes,dummy,5,Clap,M,No,A,D,B,C,E,F
+44,G6,G3,G5,G1,G2,G4,Yes,dummy,5,dummy,M,No,F,C,A,E,B,D
+59,G1,G4,G2,G3,G5,G6,Yes,Dummy,4,dummy,M,No,A,D,E,B,F,C
+72,G6,G4,G2,G1,G3,G5,Yes,dummy,5,Clap,M,No,B,F,C,D,A,E
+49,G6,G2,G3,G5,G4,G1,Yes,dummy,5,dummy,M,No,C,F,E,D,A,B
+106,G4,G1,G3,G6,G5,G2,Yes,dummy,6,dummy,M,No,C,E,B,A,F,D
+290,G6,G2,G3,G4,G1,G5,yes,dummy,7,dummy,m,No,A,F,D,E,B,C
+47,G3,G5,G4,G1,G2,G6,Yes,dummy,5,dummy,M,No,E,A,B,F,C,D
+277,G3,G6,G5,G4,G1,G2,yes,dummy,4,dummy,m,No,D,F,C,A,B,E
