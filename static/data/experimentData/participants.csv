@@ -1,4 +1,4 @@
-ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Completed
+ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Record,Gender,Styles,Order1,Order2,Order3,Order4,Order5,Order6
 234,G6,G2,G4,G1,G3,G5,No,Drums,1,Clap,No
 
 94,G5,G3,G2,G1,G6,G4,Yes,Drums,23,Clap,M,No
@@ -53,3 +53,4 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 312,G6,G4,G3,G1,G5,G2,yes,dummy,2,dummy,m,No,A,E,B,C,D,F
 118,G5,G3,G4,G2,G6,G1,NO,DUMMY,2,DUMMY,M,No,C,D,F,A,B,E
 95,G3,G2,G6,G4,G5,G1,Yes,drummy,4,dummy,M,No,B,D,E,C,F,A
+53,G6,G4,G3,G2,G1,G5,Yes,Drums,4,Clap,M,Jazzz funk dummy dummy,D,C,B,A,F,E

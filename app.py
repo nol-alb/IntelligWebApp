@@ -272,6 +272,7 @@ class RegisterForm(Form):
     gender = StringField('Gender')
     instrument = StringField('If yes, Which Instrument?')
     years_of_exp = IntegerField('Years of experience (Only Number)')
+    styles_of_music = StringField('What styles of music are you familiar with eg: Jazz, funk, carnatic, latin etc..')
     inst_of_record = StringField('Instrument you will use to tap the patterns? [Clapping, or any percussion instrument]')
 
 @app.route('/instructions', methods=['GET','POST'])
@@ -372,9 +373,10 @@ def register():
         years_of_exp = userdata["years_of_exp"]
         inst_of_record  = userdata["inst_of_record"]
         gender = userdata["gender"]
+        styles = userdata["styles_of_music"]
         with open('static/data/experimentData/participants.csv', mode='a') as csv_file:
             data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,'No',folderOrder[0],folderOrder[1],folderOrder[2],folderOrder[3],folderOrder[4],folderOrder[5]])
+            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,styles,folderOrder[0],folderOrder[1],folderOrder[2],folderOrder[3],folderOrder[4],folderOrder[5]])
         csv_file.close()
         
         return redirect(url_for('instructions'))
@@ -384,5 +386,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    app.run(host='130.207.85.75', port = 5000)
-    #app.run()
+    #app.run(host='130.207.85.75', port = 5000)
+    app.run()
