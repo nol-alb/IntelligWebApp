@@ -54,3 +54,9 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Reco
 118,G5,G3,G4,G2,G6,G1,NO,DUMMY,2,DUMMY,M,No,C,D,F,A,B,E
 95,G3,G2,G6,G4,G5,G1,Yes,drummy,4,dummy,M,No,B,D,E,C,F,A
 53,G6,G4,G3,G2,G1,G5,Yes,Drums,4,Clap,M,Jazzz funk dummy dummy,D,C,B,A,F,E
+703,G6,G1,G2,G3,G5,G4,Yes,Drums,7,Clap,M,Dummy,E,D,A,B,F,C
+402,G6,G2,G4,G5,G3,G1,yes,alto sax,8,clapping,female,"jazz, classical",E,C,A,B,F,D
+730,G5,G2,G4,G3,G1,G6,YES,Oboe,8,Clapping,Male,"Jazz, Classical",D,B,A,F,E,C
+556,G1,G3,G6,G2,G5,G4,Yes,Clarinet,9,Clapping,Female,"Classical, jazz, latin, pop",A,D,E,F,B,C
+162,G4,G6,G1,G3,G2,G5,YES,Vocals,5,Clapping,Female,"Jazz, Funk, Hip Hop, Pop, Rap, Latin, World, Rock",B,D,F,A,C,E
+202,G5,G1,G4,G2,G3,G6,Yes,Electric Guitar,20,Clapping,Man,"Jazz, Pop-rock, Classical, Heavy Metal, Bossa Nova",C,F,E,B,A,D

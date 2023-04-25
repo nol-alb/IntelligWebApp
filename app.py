@@ -196,7 +196,7 @@ def practicePerformanceView():
     trialFileCount = session["TrialFileCount"]
     numRep = session['StimuliRepeat']
     print('The trial file Number:', numRep)
-    if(int(numRep)>=9):
+    if(int(numRep)>=6):
         cnrt = 1
         session['Proceed'] = str(cnrt)
     if request.method=='POST':
@@ -386,5 +386,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    #app.run(host='130.207.85.75', port = 5000)
-    app.run()
+    app.run(host='130.207.85.75', port = 5000)
+    #app.run()
