@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use('agg')
 from scipy.io.wavfile import write
 from scipy.io import wavfile
 import scipy.signal as signal
@@ -328,8 +329,11 @@ def edit_distance_check(patternFound, arrPattern):
         patslice1 = ''.join(str(e) for e in patslice)
         pattslicelist.append(patslice1)
         editarray.append(editdistance.eval(patslice1,pattern))
-
-    matches = get_close_matches(pattern, pattslicelist,3)
+    if pattslicelist==[]:
+          print('patternhere', patternFound)
+          matches = [patternFound]
+    else:    
+         matches = get_close_matches(pattern, pattslicelist,3)
     editarray = np.asarray(editarray)
     posi = np.where((editarray==0) | (editarray==1))
     if (np.size(posi)>=3):
@@ -356,7 +360,7 @@ def patternExpander(strPattern):
     listPattern = [int(num) for num in list(strPattern)]
     return listPattern
 
-def PatternErrorVisualizer(pattern,patternmain,savepath):
+def PatternErrorVisualizer(pattern,patternmain,savepath,strchk=''):
     plt.figure()
     isochrone = np.arange(0,(16*4)+8)
     patternPos = []
@@ -411,6 +415,8 @@ def PatternErrorVisualizer(pattern,patternmain,savepath):
            fontsize=15)
     except UnboundLocalError:
         print('next')
+    if(strchk=='sorry'):
+          plt.title('Sorry, there was an issue with the audio')
     ax.set_xlabel(r'Time$\rightarrow$', color='black',  fontsize=18)
     ax.xaxis.set_label_position('top') 
     plt.vlines(isochrone[4::4][0:16],0,1,'grey','solid')
