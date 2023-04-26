@@ -142,18 +142,18 @@ def practiceRecordRoutine():
             if(cnrt1==1 or cnrt2 ==1):
                 cnrt = 1
                 session['Proceed'] = str(cnrt)     
-            if(cnrt1==1):
-                patternPlay = viz.errorVisualization(pattern, averagebeat)
-                viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
-            elif(cnrt2==1):
-                cnrt = 1
-                session['Proceed'] = str(cnrt) 
-                isExist = os.path.exists(fileName)
-                if(isExist):
-                    session['ImageFilePath'] = fileName
-                else:
-                    ass.PatternErrorVisualizer(pattern,[],fileName)
-                    session['ImageFilePath'] = fileName
+                if(cnrt1==1):
+                    patternPlay = viz.errorVisualization(pattern, averagebeat)
+                    viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
+                elif(cnrt2==1):
+                    cnrt = 1
+                    session['Proceed'] = str(cnrt) 
+                    isExist = os.path.exists(fileName)
+                    if(isExist):
+                        session['ImageFilePath'] = fileName
+                    else:
+                        ass.PatternErrorVisualizer(pattern,[],fileName)
+                        session['ImageFilePath'] = fileName
             else:
                 cnrt = 0
                 session['Proceed'] = str(cnrt) 
@@ -161,7 +161,7 @@ def practiceRecordRoutine():
                 if(isExist):
                     session['ImageFilePath'] = fileName
                 else:
-                    ass.PatternErrorVisualizer(pattern,[],fileName)
+                    ass.PatternErrorVisualizer(pattern,[],fileName,'sorry')
                     session['ImageFilePath'] = fileName
 
             session['ImageFilePath'] = fileName
