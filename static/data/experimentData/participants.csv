@@ -60,3 +60,16 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Reco
 556,G1,G3,G6,G2,G5,G4,Yes,Clarinet,9,Clapping,Female,"Classical, jazz, latin, pop",A,D,E,F,B,C
 162,G4,G6,G1,G3,G2,G5,YES,Vocals,5,Clapping,Female,"Jazz, Funk, Hip Hop, Pop, Rap, Latin, World, Rock",B,D,F,A,C,E
 202,G5,G1,G4,G2,G3,G6,Yes,Electric Guitar,20,Clapping,Man,"Jazz, Pop-rock, Classical, Heavy Metal, Bossa Nova",C,F,E,B,A,D
+958,G6,G5,G1,G3,G4,G2,Yes,dummy,3,clap,M,dummy,B,A,F,D,E,C
+270,G3,G5,G2,G6,G1,G4,Yes,dummy,3,clap,M,dummy,B,D,C,A,E,F
+863,G6,G3,G2,G4,G1,G5,YES,dumy,4,dummy,m,jass,B,C,D,A,E,F
+816,G5,G1,G2,G4,G6,G3,YES,DRUMS,-5,clap,m,LATIN,F,D,C,A,B,E
+271,G4,G3,G6,G5,G1,G2,yes,drums,4,clap,m,Jazz,E,F,D,B,A,C
+456,G6,G4,G3,G2,G1,G5,Yes,Dummy,4,clap,M,Jazz,C,B,A,E,F,D
+462,G5,G2,G4,G3,G1,G6,yes,dummy,3,clap,m,jazz,E,C,A,B,F,D
+727,G6,G2,G3,G4,G5,G1,dum,dum,3,dum,m,dum,C,F,B,A,E,D
+252,G6,G3,G1,G4,G5,G2,Yes,dummy,4,dum,M,carn,E,A,C,B,F,D
+702,G2,G5,G1,G4,G3,G6,dd,dd,1,d,m,d,D,E,C,A,B,F
+296,G1,G6,G5,G4,G2,G3,gg,g,1,g,g,e,A,D,B,E,C,F
+725,G6,G1,G4,G5,G3,G2,yes,dummy,3,dummy,m,dummy,B,D,E,F,C,A
+720,G5,G3,G4,G1,G6,G2,dd,d,1,d,m,s,F,B,E,A,C,D

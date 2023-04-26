@@ -135,6 +135,9 @@ def practiceRecordRoutine():
             try:
                 cnrt1,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
                 cnrt2 = ass.wrefAsessment(audioPath, pattern,fileName)
+                print("was here, no errors")
+                print("cnrt1", cnrt1)
+                print("cnrt2", cnrt2)
             except:
                 averagebeat = 0
                 cnrt1 = 0
@@ -142,18 +145,18 @@ def practiceRecordRoutine():
             if(cnrt1==1 or cnrt2 ==1):
                 cnrt = 1
                 session['Proceed'] = str(cnrt)     
-            if(cnrt1==1):
-                patternPlay = viz.errorVisualization(pattern, averagebeat)
-                viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
-            elif(cnrt2==1):
-                cnrt = 1
-                session['Proceed'] = str(cnrt) 
-                isExist = os.path.exists(fileName)
-                if(isExist):
-                    session['ImageFilePath'] = fileName
+                if(cnrt1==1):
+                    patternPlay = viz.errorVisualization(pattern, averagebeat)
+                    viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
                 else:
-                    ass.PatternErrorVisualizer(pattern,[],fileName)
-                    session['ImageFilePath'] = fileName
+                    cnrt = 1
+                    session['Proceed'] = str(cnrt) 
+                    isExist = os.path.exists(fileName)
+                    if(isExist):
+                        session['ImageFilePath'] = fileName
+                    else:
+                        ass.PatternErrorVisualizer(pattern,[],fileName)
+                        session['ImageFilePath'] = fileName
             else:
                 cnrt = 0
                 session['Proceed'] = str(cnrt) 
@@ -161,7 +164,7 @@ def practiceRecordRoutine():
                 if(isExist):
                     session['ImageFilePath'] = fileName
                 else:
-                    ass.PatternErrorVisualizer(pattern,[],fileName)
+                    ass.PatternErrorVisualizer(pattern,[],fileName,'sorry')
                     session['ImageFilePath'] = fileName
 
             session['ImageFilePath'] = fileName
@@ -386,5 +389,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    app.run(host='130.207.85.75', port = 5000)
-    #app.run()
+    #app.run(host='130.207.85.75', port = 5000)
+    app.run()

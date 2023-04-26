@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 from scipy.io import wavfile
@@ -31,40 +32,7 @@ from scipy.ndimage import gaussian_filter1d
 from textdistance import levenshtein, damerau_levenshtein, jaro, jaro_winkler
 from scipy.signal import find_peaks, peak_widths
 
-"""
-The Needleman-Wunsch Algorithm
-==============================
-This is a dynamic programming algorithm for finding the optimal alignment of
-two strings.
-Example
--------
-    >>> x = "GATTACA"
-    >>> y = "GCATGCU"
-    >>> print(nw(x, y))
-    G-ATTACA
-    GCA-TGCU
-LICENSE
-This is free and unencumbered software released into the public domain.
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-For more information, please refer to <http://unlicense.org/>
-"""
+
 
 import numpy as np
 
@@ -328,8 +296,13 @@ def edit_distance_check(patternFound, arrPattern):
         patslice1 = ''.join(str(e) for e in patslice)
         pattslicelist.append(patslice1)
         editarray.append(editdistance.eval(patslice1,pattern))
-
-    matches = get_close_matches(pattern, pattslicelist,3)
+    print('patternhere', patternFound)
+    if pattslicelist==[]:
+         print('patternhere', patternFound)
+         matches = [patternFound]
+    else:    
+        matches = get_close_matches(pattern, pattslicelist,3)
+    print('matches', matches )
     editarray = np.asarray(editarray)
     posi = np.where((editarray==0) | (editarray==1))
     if (np.size(posi)>=3):
@@ -356,7 +329,7 @@ def patternExpander(strPattern):
     listPattern = [int(num) for num in list(strPattern)]
     return listPattern
 
-def PatternErrorVisualizer(pattern,patternmain,savepath):
+def PatternErrorVisualizer(pattern,patternmain,savepath,strchk=''):
     plt.figure()
     isochrone = np.arange(0,(16*4)+8)
     patternPos = []
@@ -411,6 +384,8 @@ def PatternErrorVisualizer(pattern,patternmain,savepath):
            fontsize=15)
     except UnboundLocalError:
         print('next')
+    if(strchk=='sorry'):
+         plt.title('Sorry, there was an issue with the audio')
     ax.set_xlabel(r'Time$\rightarrow$', color='black',  fontsize=18)
     ax.xaxis.set_label_position('top') 
     plt.vlines(isochrone[4::4][0:16],0,1,'grey','solid')
