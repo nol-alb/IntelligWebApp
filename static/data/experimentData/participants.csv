@@ -60,3 +60,5 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Reco
 556,G1,G3,G6,G2,G5,G4,Yes,Clarinet,9,Clapping,Female,"Classical, jazz, latin, pop",A,D,E,F,B,C
 162,G4,G6,G1,G3,G2,G5,YES,Vocals,5,Clapping,Female,"Jazz, Funk, Hip Hop, Pop, Rap, Latin, World, Rock",B,D,F,A,C,E
 202,G5,G1,G4,G2,G3,G6,Yes,Electric Guitar,20,Clapping,Man,"Jazz, Pop-rock, Classical, Heavy Metal, Bossa Nova",C,F,E,B,A,D
+958,G3,G2,G4,G6,G1,G5,yes,Euphonium/Brass,13,clap,Female,"Band, jazz, pop",C,B,E,D,A,F
+270,G3,G1,G4,G6,G2,G5,Yes,Flute,10,clapping,F,"classical, rock and pop, experimental",C,D,B,A,F,E
