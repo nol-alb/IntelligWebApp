@@ -389,5 +389,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    #app.run(host='130.207.85.75', port = 5000)
-    app.run()
+    app.run(host='130.207.85.75', port = 5000)
+    #app.run()
