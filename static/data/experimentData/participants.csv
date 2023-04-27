@@ -62,3 +62,15 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Reco
 202,G5,G1,G4,G2,G3,G6,Yes,Electric Guitar,20,Clapping,Man,"Jazz, Pop-rock, Classical, Heavy Metal, Bossa Nova",C,F,E,B,A,D
 958,G3,G2,G4,G6,G1,G5,yes,Euphonium/Brass,13,clap,Female,"Band, jazz, pop",C,B,E,D,A,F
 270,G3,G1,G4,G6,G2,G5,Yes,Flute,10,clapping,F,"classical, rock and pop, experimental",C,D,B,A,F,E
+863,G6,G5,G3,G1,G4,G2,no,dummy,3,dummy,m,dummy,B,F,D,E,A,C
+816,G5,G3,G1,G4,G2,G6,yes,drums,2,dummy,m,dummy,B,D,E,A,C,F
+271,G5,G1,G2,G4,G6,G3,No,,0,Clap,Female,,D,A,E,B,F,C
+456,G6,G2,G5,G1,G4,G3,Yes,Vocals,8,Clapping,Female,Carnatic,D,C,E,F,B,A
+462,G6,G2,G1,G3,G4,G5,YES,Piano,10,Clapping,Male,"Classical, Jazz",A,E,D,F,C,B
+727,G4,G3,G2,G5,G1,G6,no,,1,clap,male,hindustani classical,E,F,C,A,D,B
+252,G1,G2,G4,G3,G6,G5,No,Not applicable,0,,Female,"Jazz, Hindustan Classical",C,E,B,D,A,F
+702,G3,G4,G1,G5,G6,G2,YES,flute,32,tapping finger,F,classical,D,B,F,E,A,C
+296,G6,G2,G5,G4,G1,G3,YES,Saxophone/Guitar,19,Clapping,Male,"Jazz, Latin, Classical, Folk, Popular, Religious",F,A,E,D,B,C
+725,G2,G4,G5,G3,G6,G1,NO,-,0,CLAPPING,m,-,A,B,D,C,E,F
+720,G5,G6,G1,G2,G3,G4,yes,drums,3,clap,M,funk,A,D,F,C,B,E
+749,G1,G6,G3,G5,G2,G4,Yes,dummy,3,dummy,M,dummy,F,D,C,B,A,E
