@@ -74,3 +74,29 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Reco
 725,G2,G4,G5,G3,G6,G1,NO,-,0,CLAPPING,m,-,A,B,D,C,E,F
 720,G5,G6,G1,G2,G3,G4,yes,drums,3,clap,M,funk,A,D,F,C,B,E
 749,G1,G6,G3,G5,G2,G4,Yes,dummy,3,dummy,M,dummy,F,D,C,B,A,E
+338,G4,G5,G2,G3,G1,G6,Yes,Drums,10,Clap,Male,"Prog, Metal",A,B,C,F,E,D
+879,G4,G6,G1,G3,G5,G2,yes,"bassoon, trumpet",7,clapping,female,"classical, some jazz",E,B,F,A,D,C
+53,G6,G4,G5,G1,G3,G2,YES,Baritone,7,Clapping,Male,"Classical, marching",B,A,E,C,D,F
+792,G4,G5,G6,G2,G1,G3,Yes,Vocal ,2,Vocal,F,Hindustani Classical ,C,E,B,D,A,F
+922,G4,G5,G6,G1,G2,G3,YES,"GUITAR, VIOLIN",20,clapping,FEMALE,"Western classical, pop, rock, metal",D,C,A,B,E,F
+217,G5,G1,G4,G2,G3,G6,NO,NA,0,Clapping,Male,"Carnatic, Rap, Pop, Hip-hop",D,F,C,A,E,B
+764,G5,G3,G6,G2,G1,G4,YES,Drums,13,clapping,Male,"Metal, rock",B,E,C,F,D,A
+188,G4,G2,G1,G6,G3,G5,Yes,Violin,8,Clapping,M,"Rock, Carnatic",B,E,F,A,D,C
+380,G4,G6,G1,G3,G2,G5,Yes,Bass,9,clapping,M,"Funk, classic rock, little bit jazz",A,C,B,D,E,F
+493,G5,G1,G6,G3,G2,G4,Yes,Violin,6,clapping,Male,Carnatic,C,F,D,E,A,B
+41,G4,G5,G1,G6,G2,G3,Yes,Electronics,15,clapping,Female,experimental,C,A,E,B,F,D
+157,G4,G5,G6,G1,G2,G3,Yes,Electric organ,15,clapping,Female,"classical, pop",D,C,A,E,F,B
+15,G3,G1,G4,G5,G6,G2,Yes,Electric organ,16,clapping,Female,"classical, pop",C,B,D,F,E,A
+813,G6,G2,G5,G4,G1,G3,YES,Guitar,10,Clapping,Male,Blues,F,B,E,A,C,D
+65,G3,G1,G6,G4,G2,G5,YES,Piano,15,Clapping,Male,"Jazz, Funk, Classical",C,E,A,D,B,F
+857,G5,G4,G1,G2,G3,G6,No,NA,0,clapping,Female,"Jazz, latin american music, rock",E,C,D,B,A,F
+839,G6,G5,G3,G4,G1,G2,YES,Piano/Electric Bass,15,Tapping,Male,"Jazz, Rock, Classical ",E,B,F,A,C,D
+521,G2,G5,G1,G3,G6,G4,YES,PERCUSSION,15,CLAPPING,Male,ALL,C,F,A,B,E,D
+344,G6,G3,G5,G2,G1,G4,Yes,"Vocals, Keyboard, Mridangam",10,Clapping,Male,"Carnatic, a bit of western in general",B,A,D,E,C,F
+129,G1,G2,G5,G4,G3,G6,Yes,Cello,4,Clapping,Male,"Hip Hop, Jazz",C,E,F,A,B,D
+648,G2,G3,G4,G6,G1,G5,YES,Drums and Vocal,15,Clap,Female,"Pop, Rock",A,F,C,B,D,E
+472,G5,G4,G6,G3,G2,G1,NO,NA,0,clapping,F,NA,F,C,B,D,E,A
+63,G6,G5,G1,G4,G2,G3,yes,vocal,18,sounds by mouth,female,carnatic,B,A,F,E,D,C
+139,G6,G5,G3,G2,G4,G1,NO,NA,0,Clapping,Female,"Pop, rock, jazz, indie",F,E,A,C,B,D
+499,G4,G1,G6,G5,G3,G2,No,NA,0,clapping ,Male,None,F,B,E,A,D,C
+593,G1,G6,G5,G2,G3,G4,No,NA,0,Clapping ,Male,NA,F,B,D,C,E,A
