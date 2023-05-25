@@ -100,3 +100,15 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Reco
 139,G6,G5,G3,G2,G4,G1,NO,NA,0,Clapping,Female,"Pop, rock, jazz, indie",F,E,A,C,B,D
 499,G4,G1,G6,G5,G3,G2,No,NA,0,clapping ,Male,None,F,B,E,A,D,C
 593,G1,G6,G5,G2,G3,G4,No,NA,0,Clapping ,Male,NA,F,B,D,C,E,A
+392,G6,G4,G5,G2,G1,G3,YES,Piano,1,Clap,Male,VG soundtracks,C,E,B,D,F,A
+675,G2,G3,G1,G6,G5,G4,yes,guitar,30,clap,male,"rock, funk",F,B,C,D,A,E
+419,G5,G6,G2,G3,G4,G1,YES,"Flute, piano",19,clapping,Female,classical,A,E,B,D,C,F
+289,G1,G5,G3,G4,G2,G6,YES,Bassoon,10,clapping,Female,Classical,B,A,E,C,D,F
+379,G2,G5,G4,G3,G1,G6,Yes,Guitar ,12,Clapping ,Male,Rock,E,C,D,A,F,B
+773,G6,G2,G1,G3,G5,G4,Yes,Guitar,25,Clapping,Female,Rock,D,C,E,F,B,A
+490,G4,G1,G3,G5,G2,G6,Yes,Violin,18,Clapping,Male,Classical,F,C,E,B,A,D
+231,G5,G4,G2,G1,G3,G6,yes,"violin, percussion, guitar, flute, piano",23,clapping,nonbinary ,"funk, baroque, popular, folk, rap, orchestral, chamber music, most kinds of Western ""classical"" music",B,C,D,A,E,F
+970,G5,G4,G3,G6,G1,G2,yes,"violin, percussion, guitar, flute, piano",23,clapping,nonbinary femme,"funk, baroque, popular, folk, rap, orchestral, chamber music, most kinds of Western ""classical"" music",F,A,E,B,D,C
+28,G3,G4,G6,G1,G2,G5,YES,"Guitar, piano",24,clapping,Female,"Classical, pop",D,E,C,B,A,F
+135,G4,G1,G3,G5,G6,G2,YES,Bassoon,10,clapping,Female,Classical,A,C,D,E,F,B
+201,G6,G1,G3,G5,G2,G4,Yes,"Voice, guitar, euphonium",23,clapping,Female,"Classical, acoustic, marching band",B,C,D,A,F,E
