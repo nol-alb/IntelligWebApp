@@ -18,6 +18,14 @@ The block diagram for the Computer-Assisted Rhythm Instruction interface.
 Showcasing the interactions between three main modules; (i)Pattern Player, (ii) Performance
 Assessment, (iii) Performance Visualization
 
+# Running the Web App
+```ruby
+cd ..<Clone Repository>
+pip install -r requirements.txt
+export FLASK_APP=app
+flask run
+```
+
 # Experiment Design
 ![alt text](https://github.com/nol-alb/IntelligWebApp/blob/main/documentation/ExperimentFlow.png)
 
