@@ -1,4 +1,4 @@
-ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Completed
+ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Instrument,Years,Record,Gender,Styles,Order1,Order2,Order3,Order4,Order5,Order6
 234,G6,G2,G4,G1,G3,G5,No,Drums,1,Clap,No
 
 94,G5,G3,G2,G1,G6,G4,Yes,Drums,23,Clap,M,No
@@ -7,3 +7,108 @@ ParticipantId,Stim1,Stim2,Stim3,Stim4,Stim5,Stim6,Musician,Years,Recording,Compl
 139,G2,G5,G3,G6,G4,G1,Yes,Drums,12,cLAP,M,No
 180,G5,G2,G1,G3,G4,G6,Yes,Drums,12,Clap,M,No
 286,G4,G5,G2,G6,G3,G1,Ys,res,2,Clap,M,No
+37,G1,G6,G2,G5,G4,G3,Yes,Drums,6,Clap,M,No,A,B,E,F,D,C
+236,G1,G6,G4,G5,G3,G2,Yes,Drums,23,Clap,M,No,A,B,D,C,E,F
+108,G2,G1,G5,G4,G3,G6,Yes,Drums,4,Clap,Male,No,B,D,E,F,C,A
+368,G4,G2,G3,G6,G1,G5,Yes,Drums,23,Clap,M,No,D,A,E,C,B,F
+84,G5,G6,G4,G3,G2,G1,Yes,Drums,23,Clap,M,No,C,B,F,E,A,D
+280,G1,G3,G4,G6,G2,G5,XXX,XXX,1,XX,XXX,No,A,B,D,F,E,C
+8,G3,G6,G2,G1,G4,G5,Yes,drums,4,Clap,M,No,F,D,C,E,A,B
+220,G3,G2,G6,G5,G4,G1,yes,piano,16,clapping,woman,No,D,B,F,A,C,E
+53,G6,G4,G5,G3,G2,G1,yes,drums,23,drums,m,No,F,A,B,E,D,C
+165,G1,G2,G5,G6,G4,G3,YES,"Bass, Guitar, Saxophone",5,Clapping,Male,No,B,A,D,C,E,F
+256,G6,G5,G1,G4,G3,G2,yes,piano,10,drums,female,No,F,D,B,E,A,C
+324,G2,G3,G1,G5,G6,G4,yes,piano,10,drums,female,No,F,E,B,D,C,A
+159,G4,G2,G5,G6,G3,G1,yes,piano,1,drums,female,No,C,B,F,E,D,A
+110,G6,G4,G5,G1,G2,G3,YES,Voice,20,Clapping,Female,No,F,D,C,B,E,A
+306,G2,G3,G6,G5,G4,G1,Yes,Dummy,1,Dummy,Dummy,No,A,F,C,E,D,B
+20,G3,G5,G6,G4,G1,G2,Yes,dummmy,12,dummy,M,No,B,C,A,D,F,E
+325,G5,G1,G3,G2,G6,G4,YES,"Bass, Guitar, Saxophone",7,Clapping,Male,No,A,C,D,E,B,F
+379,G1,G3,G2,G6,G4,G5,Yes,Electric Guitar,8,clapping,Male,No,A,C,E,F,D,B
+388,G4,G2,G5,G6,G3,G1,Yes,Euphonium/Brass,12,Table,Female,No,F,E,B,C,A,D
+79,G6,G3,G1,G5,G4,G2,YES,"Drums, Guitar, Synth",13,Clapping,Male,No,A,C,E,F,D,B
+115,G4,G1,G6,G3,G5,G2,YES,"Drums, Guitar, Synth",13,Drum stick click,Male,No,A,B,C,F,D,E
+298,G3,G4,G1,G2,G6,G5,Yes,clarinet,6,clapping,Male,No,A,C,E,B,F,D
+366,G3,G4,G6,G5,G1,G2,yes,clarinet,3,clapping,Male,No,B,D,C,A,F,E
+203,G5,G3,G6,G2,G4,G1,YES,"Piano, Guitar, Vocals",4,Clap,Male,No,F,A,E,C,B,D
+390,G2,G3,G6,G4,G5,G1,yes,Piano,7,hands,woman,No,E,C,D,A,F,B
+88,G5,G1,G4,G3,G6,G2,Yes,Guitar,3,,Male,No,D,A,F,E,C,B
+204,G6,G1,G2,G3,G4,G5,NO,,0,,,No,E,D,A,B,C,F
+58,G4,G2,G3,G5,G1,G6,YES,,2,,Male,No,A,C,E,F,D,B
+305,G4,G3,G1,G2,G5,G6,Yes,Producer and Piano,6,pencils,Male,No,B,F,C,D,E,A
+111,G2,G4,G6,G3,G5,G1,Yes,dummy,2,dummy,M,No,D,F,B,E,A,C
+37,G3,G5,G4,G1,G2,G6,Yes,dummy,2,dummy,M,No,D,A,C,F,B,E
+165,G4,G2,G3,G6,G5,G1,yes,dummy,23,dummy,m,No,D,A,C,B,E,F
+191,G1,G5,G6,G2,G3,G4,Yes,dummy,4,dummy,M,No,D,E,B,A,C,F
+246,G2,G1,G6,G5,G4,G3,Yes,dummy,5,Clap,M,No,A,D,B,C,E,F
+44,G6,G3,G5,G1,G2,G4,Yes,dummy,5,dummy,M,No,F,C,A,E,B,D
+59,G1,G4,G2,G3,G5,G6,Yes,Dummy,4,dummy,M,No,A,D,E,B,F,C
+72,G6,G4,G2,G1,G3,G5,Yes,dummy,5,Clap,M,No,B,F,C,D,A,E
+49,G6,G2,G3,G5,G4,G1,Yes,dummy,5,dummy,M,No,C,F,E,D,A,B
+106,G4,G1,G3,G6,G5,G2,Yes,dummy,6,dummy,M,No,C,E,B,A,F,D
+290,G6,G2,G3,G4,G1,G5,yes,dummy,7,dummy,m,No,A,F,D,E,B,C
+47,G3,G5,G4,G1,G2,G6,Yes,dummy,5,dummy,M,No,E,A,B,F,C,D
+277,G3,G6,G5,G4,G1,G2,yes,dummy,4,dummy,m,No,D,F,C,A,B,E
+132,G1,G2,G5,G6,G3,G4,Yes,Dummy,5,dummy,M,No,F,B,C,A,D,E
+312,G6,G4,G3,G1,G5,G2,yes,dummy,2,dummy,m,No,A,E,B,C,D,F
+118,G5,G3,G4,G2,G6,G1,NO,DUMMY,2,DUMMY,M,No,C,D,F,A,B,E
+95,G3,G2,G6,G4,G5,G1,Yes,drummy,4,dummy,M,No,B,D,E,C,F,A
+53,G6,G4,G3,G2,G1,G5,Yes,Drums,4,Clap,M,Jazzz funk dummy dummy,D,C,B,A,F,E
+703,G6,G1,G2,G3,G5,G4,Yes,Drums,7,Clap,M,Dummy,E,D,A,B,F,C
+402,G6,G2,G4,G5,G3,G1,yes,alto sax,8,clapping,female,"jazz, classical",E,C,A,B,F,D
+730,G5,G2,G4,G3,G1,G6,YES,Oboe,8,Clapping,Male,"Jazz, Classical",D,B,A,F,E,C
+556,G1,G3,G6,G2,G5,G4,Yes,Clarinet,9,Clapping,Female,"Classical, jazz, latin, pop",A,D,E,F,B,C
+162,G4,G6,G1,G3,G2,G5,YES,Vocals,5,Clapping,Female,"Jazz, Funk, Hip Hop, Pop, Rap, Latin, World, Rock",B,D,F,A,C,E
+202,G5,G1,G4,G2,G3,G6,Yes,Electric Guitar,20,Clapping,Man,"Jazz, Pop-rock, Classical, Heavy Metal, Bossa Nova",C,F,E,B,A,D
+958,G3,G2,G4,G6,G1,G5,yes,Euphonium/Brass,13,clap,Female,"Band, jazz, pop",C,B,E,D,A,F
+270,G3,G1,G4,G6,G2,G5,Yes,Flute,10,clapping,F,"classical, rock and pop, experimental",C,D,B,A,F,E
+863,G6,G5,G3,G1,G4,G2,no,dummy,3,dummy,m,dummy,B,F,D,E,A,C
+816,G5,G3,G1,G4,G2,G6,yes,drums,2,dummy,m,dummy,B,D,E,A,C,F
+271,G5,G1,G2,G4,G6,G3,No,,0,Clap,Female,,D,A,E,B,F,C
+456,G6,G2,G5,G1,G4,G3,Yes,Vocals,8,Clapping,Female,Carnatic,D,C,E,F,B,A
+462,G6,G2,G1,G3,G4,G5,YES,Piano,10,Clapping,Male,"Classical, Jazz",A,E,D,F,C,B
+727,G4,G3,G2,G5,G1,G6,no,,1,clap,male,hindustani classical,E,F,C,A,D,B
+252,G1,G2,G4,G3,G6,G5,No,Not applicable,0,,Female,"Jazz, Hindustan Classical",C,E,B,D,A,F
+702,G3,G4,G1,G5,G6,G2,YES,flute,32,tapping finger,F,classical,D,B,F,E,A,C
+296,G6,G2,G5,G4,G1,G3,YES,Saxophone/Guitar,19,Clapping,Male,"Jazz, Latin, Classical, Folk, Popular, Religious",F,A,E,D,B,C
+725,G2,G4,G5,G3,G6,G1,NO,-,0,CLAPPING,m,-,A,B,D,C,E,F
+720,G5,G6,G1,G2,G3,G4,yes,drums,3,clap,M,funk,A,D,F,C,B,E
+749,G1,G6,G3,G5,G2,G4,Yes,dummy,3,dummy,M,dummy,F,D,C,B,A,E
+338,G4,G5,G2,G3,G1,G6,Yes,Drums,10,Clap,Male,"Prog, Metal",A,B,C,F,E,D
+879,G4,G6,G1,G3,G5,G2,yes,"bassoon, trumpet",7,clapping,female,"classical, some jazz",E,B,F,A,D,C
+53,G6,G4,G5,G1,G3,G2,YES,Baritone,7,Clapping,Male,"Classical, marching",B,A,E,C,D,F
+792,G4,G5,G6,G2,G1,G3,Yes,Vocal ,2,Vocal,F,Hindustani Classical ,C,E,B,D,A,F
+922,G4,G5,G6,G1,G2,G3,YES,"GUITAR, VIOLIN",20,clapping,FEMALE,"Western classical, pop, rock, metal",D,C,A,B,E,F
+217,G5,G1,G4,G2,G3,G6,NO,NA,0,Clapping,Male,"Carnatic, Rap, Pop, Hip-hop",D,F,C,A,E,B
+764,G5,G3,G6,G2,G1,G4,YES,Drums,13,clapping,Male,"Metal, rock",B,E,C,F,D,A
+188,G4,G2,G1,G6,G3,G5,Yes,Violin,8,Clapping,M,"Rock, Carnatic",B,E,F,A,D,C
+380,G4,G6,G1,G3,G2,G5,Yes,Bass,9,clapping,M,"Funk, classic rock, little bit jazz",A,C,B,D,E,F
+493,G5,G1,G6,G3,G2,G4,Yes,Violin,6,clapping,Male,Carnatic,C,F,D,E,A,B
+41,G4,G5,G1,G6,G2,G3,Yes,Electronics,15,clapping,Female,experimental,C,A,E,B,F,D
+157,G4,G5,G6,G1,G2,G3,Yes,Electric organ,15,clapping,Female,"classical, pop",D,C,A,E,F,B
+15,G3,G1,G4,G5,G6,G2,Yes,Electric organ,16,clapping,Female,"classical, pop",C,B,D,F,E,A
+813,G6,G2,G5,G4,G1,G3,YES,Guitar,10,Clapping,Male,Blues,F,B,E,A,C,D
+65,G3,G1,G6,G4,G2,G5,YES,Piano,15,Clapping,Male,"Jazz, Funk, Classical",C,E,A,D,B,F
+857,G5,G4,G1,G2,G3,G6,No,NA,0,clapping,Female,"Jazz, latin american music, rock",E,C,D,B,A,F
+839,G6,G5,G3,G4,G1,G2,YES,Piano/Electric Bass,15,Tapping,Male,"Jazz, Rock, Classical ",E,B,F,A,C,D
+521,G2,G5,G1,G3,G6,G4,YES,PERCUSSION,15,CLAPPING,Male,ALL,C,F,A,B,E,D
+344,G6,G3,G5,G2,G1,G4,Yes,"Vocals, Keyboard, Mridangam",10,Clapping,Male,"Carnatic, a bit of western in general",B,A,D,E,C,F
+129,G1,G2,G5,G4,G3,G6,Yes,Cello,4,Clapping,Male,"Hip Hop, Jazz",C,E,F,A,B,D
+648,G2,G3,G4,G6,G1,G5,YES,Drums and Vocal,15,Clap,Female,"Pop, Rock",A,F,C,B,D,E
+472,G5,G4,G6,G3,G2,G1,NO,NA,0,clapping,F,NA,F,C,B,D,E,A
+63,G6,G5,G1,G4,G2,G3,yes,vocal,18,sounds by mouth,female,carnatic,B,A,F,E,D,C
+139,G6,G5,G3,G2,G4,G1,NO,NA,0,Clapping,Female,"Pop, rock, jazz, indie",F,E,A,C,B,D
+499,G4,G1,G6,G5,G3,G2,No,NA,0,clapping ,Male,None,F,B,E,A,D,C
+593,G1,G6,G5,G2,G3,G4,No,NA,0,Clapping ,Male,NA,F,B,D,C,E,A
+392,G6,G4,G5,G2,G1,G3,YES,Piano,1,Clap,Male,VG soundtracks,C,E,B,D,F,A
+675,G2,G3,G1,G6,G5,G4,yes,guitar,30,clap,male,"rock, funk",F,B,C,D,A,E
+419,G5,G6,G2,G3,G4,G1,YES,"Flute, piano",19,clapping,Female,classical,A,E,B,D,C,F
+289,G1,G5,G3,G4,G2,G6,YES,Bassoon,10,clapping,Female,Classical,B,A,E,C,D,F
+379,G2,G5,G4,G3,G1,G6,Yes,Guitar ,12,Clapping ,Male,Rock,E,C,D,A,F,B
+773,G6,G2,G1,G3,G5,G4,Yes,Guitar,25,Clapping,Female,Rock,D,C,E,F,B,A
+490,G4,G1,G3,G5,G2,G6,Yes,Violin,18,Clapping,Male,Classical,F,C,E,B,A,D
+231,G5,G4,G2,G1,G3,G6,yes,"violin, percussion, guitar, flute, piano",23,clapping,nonbinary ,"funk, baroque, popular, folk, rap, orchestral, chamber music, most kinds of Western ""classical"" music",B,C,D,A,E,F
+970,G5,G4,G3,G6,G1,G2,yes,"violin, percussion, guitar, flute, piano",23,clapping,nonbinary femme,"funk, baroque, popular, folk, rap, orchestral, chamber music, most kinds of Western ""classical"" music",F,A,E,B,D,C
+28,G3,G4,G6,G1,G2,G5,YES,"Guitar, piano",24,clapping,Female,"Classical, pop",D,E,C,B,A,F
+135,G4,G1,G3,G5,G6,G2,YES,Bassoon,10,clapping,Female,Classical,A,C,D,E,F,B
+201,G6,G1,G3,G5,G2,G4,Yes,"Voice, guitar, euphonium",23,clapping,Female,"Classical, acoustic, marching band",B,C,D,A,F,E

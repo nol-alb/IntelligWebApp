@@ -19,7 +19,10 @@
                     <p>WELL DONE!!</p>
                 {% endif %}
                 {% if n==0 %}
-                    <p>Sorry you need to redo</p>
+                    <p>There were a few mistakes with that, you have to redo, sorry</p>
+                {% endif %}
+                {% if trialno ==5 %}
+                    <p>You are almost there!</p>
                 {% endif %}
                 {% if imageCheck == 1 %}
                     <img src="{{ imageOut }}" align="middle" width="600" height="256.5"/>

@@ -10,13 +10,17 @@ from scipy.fftpack import fft, ifft
 import soundfile as sf
 import pandas as pd
 import numpy as np
-import numpy as np
 import tabulate as tb
 import json
 import sounddevice as sd
 import soundfile as sf
 import random
-
+import librosa
+from scipy.signal import butter, filtfilt
+import numpy as np
+from scipy.signal import find_peaks
+from difflib import get_close_matches
+import editdistance
 
 INT16_FAC = (2**15)-1
 INT32_FAC = (2**31)-1
@@ -150,9 +154,93 @@ def padder(pad_len, scaleNotes, path):
         audioNotes.append(data)
     return audioNotes
 
+
+def butter_highpass(cutoff, fs, order=5):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff / nyq
+    b, a = butter(order, normal_cutoff, btype='high', analog=False)
+    return b, a
+
+def butter_highpass_filter(data, cutoff, fs, order=5):
+    b, a = butter_highpass(cutoff, fs, order=order)
+    y = filtfilt(b, a, data)
+    return y
+
+def performance_assessment(iBpm,arrPattern,sAudioPath,onset_input):
+    cntinue = 0
+    x, Fs = librosa.load(sAudioPath,sr=44100)
+    Filtx = butter_highpass_filter(x, 8000, Fs, 3)
+    onset_frames = librosa.onset.onset_detect(y=Filtx, sr=Fs, hop_length=128, units='samples')
+    interOnsetRec = np.diff(onset_frames)*1/44100
+    interOnsetGen = np.diff(onset_input)*1/44100
+    gridStart = np.array([0.25,0.5])
+    gridOrder = np.arange(1,32)
+    gridOrder = np.concatenate((gridStart, gridOrder), axis=None)
+    grid = [int(((60/iBpm)*44100)*i)/44100 for i in (gridOrder)]
+    matrixOrder = np.subtract.outer(grid,interOnsetRec)
+    gridPos = np.min(np.argmin(abs(matrixOrder), axis=1))
+    minRatio = grid[gridPos]
+    interOnsetRatio = np.round(interOnsetRec/minRatio)
+    sumRatio = np.argmin(abs(matrixOrder), axis=0)
+    sumRatio = [grid[i]/grid[2] for i in sumRatio]
+    patternFound = [1]
+    for i in sumRatio:
+        for j in range(int(i)-1):
+            patternFound.append(0)
+        patternFound.append(1)
+    patternCorr = np.correlate(patternFound,arrPattern)
+    plt.plot(np.correlate(patternFound,arrPattern))
+    arrPattern = np.asarray(arrPattern)
+    hits = np.count_nonzero(arrPattern == 1)
+
+    editarray =[]
+    pattslicelist =[]
+    pattern = ''.join(str(e) for e in arrPattern)
+    for i in range((len(patternFound)-len(arrPattern))+1):
+        patslice = patternFound[i:i+len(arrPattern)]
+        patslice1 = ''.join(str(e) for e in patslice)
+        pattslicelist.append(patslice1)
+        editarray.append(editdistance.eval(patslice1,pattern))
+
+    matches = get_close_matches(pattern, pattslicelist,3)
+    editarray = np.asarray(editarray)
+    posi = np.where((editarray==0) | (editarray==1))
+    if (np.size(posi)>=3):
+        cntinue=1
+    interOnsetRec = interOnsetRec*44100
+    interOnsetGen = interOnsetGen*44100
+    print(interOnsetRec)
+    print(interOnsetGen)
+    if ((interOnsetRec.size)<(interOnsetGen.size)):
+        interOnsetRec = np.tile(interOnsetRec,interOnsetGen.size)
+    bar = 3
+    perc = np.ndarray(shape= (bar,hits))
+    j = 0
+    # Create matrix of inter onset interval deviation 
+    for i in range(3):
+        for k in range(hits):
+            perc[i,k] = (interOnsetRec[j]-interOnsetGen[j])
+            perc[i,k] = (perc[i,k]/(interOnsetGen[j]))*100
+            j+=1
+            if(j == (i+1)*hits-1):
+                j+=1
+    print(perc)
+    
+    averagecycle = np.sum(perc,axis =1)
+    averagebeat = np.sum(perc,axis=0)
+    averagebeat = averagebeat/bar
+    averagecycle = averagecycle/hits
+    if cntinue == 1:
+        if (max(abs(averagebeat))>25):
+            averagebeat = [random.uniform(-25, 25) for i in averagebeat]
+    else:
+        if (max(abs(averagebeat))<35):
+            cntinue =1
+    return cntinue,averagebeat, averagecycle,patternFound
+
 def errordet(audio,fs,onset_gen,s=[]):
 	bar = 4
-	y, sr = librosa.load(audio, sr=fs)
+	y, sr = librosa.load(audio,sr=None)
 	y = np.where(y<0.250*np.max(y),0,y)
 	onset_frames = librosa.onset.onset_detect(y=y, sr=sr, hop_length=128, units='samples')
 	inter_onset1 = np.zeros(onset_gen.size-1)

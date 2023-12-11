@@ -7,6 +7,7 @@ import json
 import audioProcess as aud
 import visualization as viz
 import utils as util
+import assessment as ass
 
 
 
@@ -127,19 +128,42 @@ def practiceRecordRoutine():
             pattern = session['currentPattern']
             audioPath = session['RecordFilePath']
             onsetData = session['OnsetData']
-            try:
-                averagebeat, averagecycle,cnrt = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
-            except:
-                averagebeat = 0
-                cnrt = 0
-            print('PatternHere:',pattern, averagebeat)
-            patternPlay = viz.errorVisualization(pattern, averagebeat)
-            print('PlayPatternHere:',patternPlay)
             fileDirectory = session['participantPath']
             filePath = os.path.join(fileDirectory, session['currentFolder'])
             currentPattern =  ''.join(str(pat) for pat in session['currentPattern'])
             fileName = filePath + '/images/' + currentPattern + '_' + session['StimuliRepeat'] + '.png'
-            viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
+            try:
+                cnrt1,averagebeat, averagecycle,patternFound = aud.performance_assessment(420,pattern,audioPath,onset_input=np.array(onsetData))
+                cnrt2 = ass.wrefAsessment(audioPath, pattern,fileName)
+            except:
+                averagebeat = 0
+                cnrt1 = 0
+                cnrt2 = 0
+            if(cnrt1==1 or cnrt2 ==1):
+                cnrt = 1
+                session['Proceed'] = str(cnrt)     
+                if(cnrt1==1):
+                    patternPlay = viz.errorVisualization(pattern, averagebeat)
+                    viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
+                elif(cnrt2==1):
+                    cnrt = 1
+                    session['Proceed'] = str(cnrt) 
+                    isExist = os.path.exists(fileName)
+                    if(isExist):
+                        session['ImageFilePath'] = fileName
+                    else:
+                        ass.PatternErrorVisualizer(pattern,[],fileName)
+                        session['ImageFilePath'] = fileName
+            else:
+                cnrt = 0
+                session['Proceed'] = str(cnrt) 
+                isExist = os.path.exists(fileName)
+                if(isExist):
+                    session['ImageFilePath'] = fileName
+                else:
+                    ass.PatternErrorVisualizer(pattern,[],fileName,'sorry')
+                    session['ImageFilePath'] = fileName
+
             session['ImageFilePath'] = fileName
         return redirect(url_for('practicePerformanceView'))
     else:
@@ -153,17 +177,22 @@ def practicePerformanceView():
     audioPath = session['RecordFilePath']
     onsetData = session['OnsetData']
     bimageCheck = session['bImage']
+    cnrt = int(session['Proceed'])
     if (bimageCheck == 'True'):
         imageCheck = 1
     if (bimageCheck == 'False'):
         imageCheck = 0
-    # averagebeat, averagecycle,cnrt = aud.errordet(audio=audioPath,fs=44100,onset_gen=np.array(onsetData),s=pattern)
     #Check if trial file count is equal to length of stimuli folder, if yes, show the block pause html else move on
     '''
     if it is the final slot then make the dashboard and thank them!
     '''
     cnrt=0
     trialFileCount = session["TrialFileCount"]
+    numRep = session['StimuliRepeat']
+    print('The trial file Number:', numRep)
+    if(int(numRep)>=6):
+        cnrt = 1
+        session['Proceed'] = str(cnrt)
     if request.method=='POST':
         if (cnrt == 0):
             if (trialFileCount>0):
@@ -192,7 +221,7 @@ def practicePerformanceView():
                 return redirect(url_for('practicePlayRoutine'))
     else:
         #saveragebeat, averagecycle,cnrt = aud.errordet(audioPath,44100,onsetData,pattern)
-        return render_template('practiceperformance.html', imageOut = fileName, n = cnrt, imageCheck= imageCheck)
+        return render_template('practiceperformance.html', imageOut = fileName, n = cnrt, imageCheck= imageCheck, trialno = int(numRep))
 @app.route('/blockcomplete', methods=['GET','POST'])
 def blockWaitRoutine():
     where = session['where']
@@ -205,7 +234,14 @@ def blockWaitRoutine():
         stims = session['stimuliOrder']
         print('this is stimuli:',session['stimuliOrder'] )
         session['OrderCount'] = cntOrder
-        if(cntOrder>5):
+        #make6
+        if(cntOrder>6):
+            #append csv to complete YES
+            with open('static/data/experimentData/complete.csv', mode='a') as csv_file:
+                data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                participantInd = session['participantIndex']
+                data.writerow([str(participantInd), 'Yes'])
+            csv_file.close()
             return render_template('experimentcomplete.html')
         session['currentFolder'] = stims[cntOrder]
         session['bImage'] = imageCheck[cntOrder]
@@ -230,6 +266,7 @@ class RegisterForm(Form):
     gender = StringField('Gender')
     instrument = StringField('If yes, Which Instrument?')
     years_of_exp = IntegerField('Years of experience (Only Number)')
+    styles_of_music = StringField('What styles of music are you familiar with eg: Jazz, funk, carnatic, latin etc..')
     inst_of_record = StringField('Instrument you will use to tap the patterns? [Clapping, or any percussion instrument]')
 
 @app.route('/instructions', methods=['GET','POST'])
@@ -254,6 +291,7 @@ def register():
         intTrialFileCount = 0
         session['where'] = ['Practice Block', '1/6','2/6','3/6','4/6','5/6','6/6']
         session['bImage'] = 'True'
+        session['Proceed'] = str(0)
         session['StimuliRepeat'] = str(1)
         session['StimuliSize'] = str(0)
         session['ImageCheck'] = []
@@ -263,7 +301,9 @@ def register():
         Stimarr = np.array(['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
         participantData = dict(request.form)
         RandGen = np.load('static/data/listOfNumbers.npy')
+        print(RandGen)
         participantInd, RandGen = RandGen[-1], RandGen[:-1]
+        print(RandGen)
         np.save('static/data/listOfNumbers.npy',RandGen)
         newPath = 'static/data/experimentData/' + str(participantInd)
         session['participantIndex'] = str(participantInd)
@@ -281,7 +321,7 @@ def register():
         Order = session['stimuliOrder']
         session["IsUpload"] = "No"
         print(Order)
-        ifImage = ['False']
+        ifImage = []
         pathDictionary,session['trialFilesDic'],session['trialPatternDic'],randomDictionary,session['trialImageDic'],session['trialOnsetDic'],folderOrder = util.pathOrganizer()
         print(session['trialFilesDic'])
         for i in Order:
@@ -327,9 +367,10 @@ def register():
         years_of_exp = userdata["years_of_exp"]
         inst_of_record  = userdata["inst_of_record"]
         gender = userdata["gender"]
+        styles = userdata["styles_of_music"]
         with open('static/data/experimentData/participants.csv', mode='a') as csv_file:
             data = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,'No'])
+            data.writerow([str(participantInd), Order[1],Order[2],Order[3],Order[4],Order[5],Order[6],musician,instrument,years_of_exp,inst_of_record,gender,styles,folderOrder[0],folderOrder[1],folderOrder[2],folderOrder[3],folderOrder[4],folderOrder[5]])
         csv_file.close()
         
         return redirect(url_for('instructions'))
@@ -339,4 +380,5 @@ def register():
     return render_template('registration.html', form=form)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='130.207.85.75', port = 5000)
+    #app.run()
