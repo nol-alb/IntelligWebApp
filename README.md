@@ -14,3 +14,13 @@ performance audio.
 
 # Block Diagram 
 ![alt text](https://github.com/nol-alb/IntelligWebApp/blob/main/documentation/FullPipeline.png)
+The block diagram for the Computer-Assisted Rhythm Instruction interface.
+Showcasing the interactions between three main modules; (i)Pattern Player, (ii) Performance
+Assessment, (iii) Performance Visualization
+
+# Experiment Design
+![alt text](https://github.com/nol-alb/IntelligWebApp/blob/main/documentation/ExperimentFlow.png)
+
+# Call For Experiment 
+![alt text](https://github.com/nol-alb/IntelligWebApp/blob/main/documentation/poster.png)
+
