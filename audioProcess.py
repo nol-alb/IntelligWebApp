@@ -1,8 +1,7 @@
-#import librosa
+import librosa
 import numpy as np
 import matplotlib
 matplotlib.use('agg')
-import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 from scipy.io import wavfile
 import scipy.signal as signal

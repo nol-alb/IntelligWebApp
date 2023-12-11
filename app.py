@@ -165,14 +165,7 @@ def practiceRecordRoutine():
                     session['ImageFilePath'] = fileName
 
             session['ImageFilePath'] = fileName
-
-
-
-#            print('PatternHere:',patternFound, averagebeat)
-#            patternPlay = viz.errorVisualization(pattern, averagebeat)
-#            print('PlayPatternHere:',patternPlay)
-#            viz.PatternErrorVisualizer(pattern,patternPlay,fileName)
-            return redirect(url_for('practicePerformanceView'))
+        return redirect(url_for('practicePerformanceView'))
     else:
         return render_template('practicerecord.html')
 
@@ -193,6 +186,7 @@ def practicePerformanceView():
     '''
     if it is the final slot then make the dashboard and thank them!
     '''
+    cnrt=0
     trialFileCount = session["TrialFileCount"]
     numRep = session['StimuliRepeat']
     print('The trial file Number:', numRep)
